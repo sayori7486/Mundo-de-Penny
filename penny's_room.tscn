@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://bmft3gyqrxr7c"]
+
+[ext_resource type="Texture2D" uid="uid://c4tunwom8t5qk" path="res://Sprites/Map/penny's room.png" id="1_s0fxj"]
+[ext_resource type="PackedScene" uid="uid://gre1yqsgs4fh" path="res://Scenes/player.tscn" id="2_75ajk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mkerq"]
+size = Vector2(22.5, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2a8f"]
+size = Vector2(340, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_12jbx"]
+size = Vector2(20, 217)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s0fxj"]
+size = Vector2(363.5, 35.5)
+
+[node name="Penny\'s Room" type="Node2D" unique_id=179292971]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1722864217]
+position = Vector2(160, 128)
+texture = ExtResource("1_s0fxj")
+
+[node name="Collisions" type="Node2D" parent="." unique_id=1236257937]
+position = Vector2(0, 29)
+
+[node name="Wall" type="StaticBody2D" parent="Collisions" unique_id=61940101]
+position = Vector2(329, 109)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/Wall" unique_id=1461227281]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_mkerq")
+
+[node name="Wall2" type="StaticBody2D" parent="Collisions" unique_id=128867773]
+position = Vector2(156, 204)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/Wall2" unique_id=870184491]
+position = Vector2(14, 0)
+shape = SubResource("RectangleShape2D_c2a8f")
+
+[node name="Wall3" type="StaticBody2D" parent="Collisions" unique_id=2121138911]
+position = Vector2(-20, 100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/Wall3" unique_id=1088722897]
+position = Vector2(14, 4.5)
+shape = SubResource("RectangleShape2D_12jbx")
+
+[node name="Wall4" type="StaticBody2D" parent="Collisions" unique_id=1085313163]
+position = Vector2(161, 14)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/Wall4" unique_id=935722334]
+position = Vector2(2.25, 3.25)
+shape = SubResource("RectangleShape2D_s0fxj")
+
+[node name="Objects" type="StaticBody2D" parent="Collisions" unique_id=2003043804]
+position = Vector2(240, 112)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Objects" unique_id=1104182517]
+polygon = PackedVector2Array(-10, -9, 10, -9, 10, 14, -10, 14)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Collisions/Objects" unique_id=1792323900]
+polygon = PackedVector2Array(39, -10, 32, -10, 32, -7, 17, -7, 17, 14, 39, 14)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Collisions/Objects" unique_id=980485605]
+polygon = PackedVector2Array(-39, -10, -32, -10, -32, -7, -17, -7, -17, 14, -39, 14)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Collisions/Objects" unique_id=384429819]
+polygon = PackedVector2Array(-141, -47, -141, -65, -118, -65, -118, -78, -181, -78, -181, -45, -183, -45, -183, -31, -138, -31, -138, -47)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Collisions/Objects" unique_id=1755876110]
+polygon = PackedVector2Array(-220, -48, -220, -78, -236, -78, -236, -48)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Collisions/Objects" unique_id=1434922372]
+polygon = PackedVector2Array(-66, -77, -66, -66, -57, -66, -57, -60, -43, -60, -43, -66, -34, -66, -34, -79, -66, -79)
+
+[node name="Player" parent="." unique_id=310777521 instance=ExtResource("2_75ajk")]
+position = Vector2(160, 132)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=180166728]
+position = Vector2(160, 128)
+limit_left = 0
+limit_top = 0
+limit_right = 320
+limit_bottom = 256
