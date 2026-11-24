@@ -1,7 +1,11 @@
 [gd_scene format=3 uid="uid://bmft3gyqrxr7c"]
 
-[ext_resource type="Texture2D" uid="uid://c4tunwom8t5qk" path="res://Sprites/Map/penny's room.png" id="1_s0fxj"]
-[ext_resource type="PackedScene" uid="uid://gre1yqsgs4fh" path="res://Scenes/player.tscn" id="2_75ajk"]
+[ext_resource type="Texture2D" uid="uid://c4tunwom8t5qk" path="res://Sprites/Map/penny's room.png" id="1_riddr"]
+[ext_resource type="Script" uid="uid://cnujcxbq7wvnp" path="res://Scripts/CollectibleTracker.cs" id="2_m215i"]
+[ext_resource type="PackedScene" uid="uid://gre1yqsgs4fh" path="res://Scenes/player.tscn" id="3_sf61d"]
+[ext_resource type="PackedScene" uid="uid://cf7vu48dtsygf" path="res://Scenes/collectible.tscn" id="4_2c7ix"]
+[ext_resource type="Script" uid="uid://bjs1n2wx0xi37" path="res://Scripts/InventoryHUD.cs" id="6_inventory_hud"]
+[ext_resource type="Texture2D" uid="uid://dwx7880wafbls" path="res://Sprites/Etc/itens.png" id="7_items"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkerq"]
 size = Vector2(22.5, 200)
@@ -15,11 +19,36 @@ size = Vector2(20, 217)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s0fxj"]
 size = Vector2(363.5, 35.5)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_m215i"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(99.49285, 66.018326, 23.575531, 28.705978)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sf61d"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(68.54894, 33.302006, 21.910484, 29.710312)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2c7ix"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(68.50539, 63.878204, 22.600601, 30.786118)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2n7bl"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(36.260124, 65.02454, 22.162163, 29.755821)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_legwd"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(100.79552, 33.4917, 21.146797, 29.203178)
+
 [node name="Penny\'s Room" type="Node2D" unique_id=179292971]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1722864217]
 position = Vector2(160, 128)
-texture = ExtResource("1_s0fxj")
+texture = ExtResource("1_riddr")
 
 [node name="Collisions" type="Node2D" parent="." unique_id=1236257937]
 position = Vector2(0, 29)
@@ -73,7 +102,33 @@ polygon = PackedVector2Array(-220, -48, -220, -78, -236, -78, -236, -48)
 [node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Collisions/Objects" unique_id=1434922372]
 polygon = PackedVector2Array(-66, -77, -66, -66, -57, -66, -57, -60, -43, -60, -43, -66, -34, -66, -34, -79, -66, -79)
 
-[node name="Player" parent="." unique_id=310777521 instance=ExtResource("2_75ajk")]
+[node name="CollectibleTracker" type="Node" parent="." unique_id=1504908953]
+script = ExtResource("2_m215i")
+
+[node name="InventoryHUD" type="CanvasLayer" parent="." unique_id=599319149]
+script = ExtResource("6_inventory_hud")
+
+[node name="Collectible" parent="." unique_id=935793702 instance=ExtResource("4_2c7ix")]
+position = Vector2(306, 72)
+ItemTexture = SubResource("AtlasTexture_m215i")
+
+[node name="Collectible2" parent="." unique_id=1267453198 instance=ExtResource("4_2c7ix")]
+position = Vector2(157, 206)
+ItemTexture = SubResource("AtlasTexture_sf61d")
+
+[node name="Collectible3" parent="." unique_id=466737233 instance=ExtResource("4_2c7ix")]
+position = Vector2(35, 62)
+ItemTexture = SubResource("AtlasTexture_2c7ix")
+
+[node name="Collectible4" parent="." unique_id=838648905 instance=ExtResource("4_2c7ix")]
+position = Vector2(240, 131)
+ItemTexture = SubResource("AtlasTexture_2n7bl")
+
+[node name="Collectible5" parent="." unique_id=1842697759 instance=ExtResource("4_2c7ix")]
+position = Vector2(19, 138)
+ItemTexture = SubResource("AtlasTexture_legwd")
+
+[node name="Player" parent="." unique_id=310777521 instance=ExtResource("3_sf61d")]
 position = Vector2(160, 132)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=180166728]
