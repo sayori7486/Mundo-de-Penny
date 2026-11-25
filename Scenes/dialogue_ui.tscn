@@ -1,0 +1,40 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/DialogueController.cs" id="1_dialogue"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialogue"]
+bg_color = Color(0.035, 0.04, 0.065, 0.94)
+border_color = Color(0.42, 0.31, 0.54, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+content_margin_left = 6.0
+content_margin_top = 4.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+
+[node name="DialogueUI" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_dialogue")
+
+[node name="DialoguePanel" type="PanelContainer" parent="."]
+visible = false
+anchor_left = 0.04
+anchor_top = 0.68
+anchor_right = 0.96
+anchor_bottom = 0.96
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dialogue")
+
+[node name="Content" type="HBoxContainer" parent="DialoguePanel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Portrait" type="TextureRect" parent="DialoguePanel/Content"]
+custom_minimum_size = Vector2(36, 40)
+layout_mode = 2
+
+[node name="Text" type="Label" parent="DialoguePanel/Content"]
+layout_mode = 2
+size_flags_horizontal = 3

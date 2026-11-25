@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cjy3epfo3678i"]
+
+[ext_resource type="Script" uid="uid://bf8urclfaxbkw" path="res://Scripts/Prologue.cs" id="1_prologue"]
+[ext_resource type="FontFile" uid="uid://b3cuwt278574n" path="res://Fonts/AlteHaasGroteskRegular.ttf" id="2_font"]
+
+[node name="Prologue" type="Control" unique_id=1378751907]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_prologue")
+NarrativeFont = ExtResource("2_font")
+Pages = Array[String](["Certo... ja foi quase tudo...", "Só falta pegar os meus bichinhos, assim meu quarto finalmente vai estar arrumado!", "Objetivo: colete os ursos de pelúcia"])
+CharactersPerSecond = 8.0

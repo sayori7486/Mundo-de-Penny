@@ -15,6 +15,11 @@ public partial class Player : CharacterBody2D
 	private Camera2D _camera = null!;
 	private string _facing = "down";
 
+	public override void _EnterTree()
+	{
+		AddToGroup("player");
+	}
+
 	public override void _Ready()
 	{
 		_sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");

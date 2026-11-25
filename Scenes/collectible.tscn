@@ -9,7 +9,7 @@ atlas = ExtResource("2_items")
 region = Rect2(69.02596, 33.215363, 22.3042, 28.99276)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_solid"]
-size = Vector2(18, 26)
+size = Vector2(16, 21)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pickup"]
 radius = 16.0
@@ -20,11 +20,10 @@ script = ExtResource("1_collectible")
 ItemTexture = SubResource("AtlasTexture_collectible")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1593577144]
-z_index = 1
 texture = SubResource("AtlasTexture_collectible")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1149369530]
-position = Vector2(-1, 1)
+position = Vector2(0, 3.5)
 shape = SubResource("RectangleShape2D_solid")
 
 [node name="PickupArea" type="Area2D" parent="." unique_id=545561786]
