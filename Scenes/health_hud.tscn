@@ -153,7 +153,7 @@ animation = &"idle"
 frame_progress = 0.910966
 
 [node name="LifeStage" type="AnimatedSprite2D" parent="." unique_id=164107700]
-position = Vector2(21, 22)
+position = Vector2(21, 25)
 scale = Vector2(0.08, 0.08)
 sprite_frames = SubResource("SpriteFrames_health")
 animation = &"full"

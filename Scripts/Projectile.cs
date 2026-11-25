@@ -5,6 +5,9 @@ public partial class Projectile : Area2D
 	[Export]
 	public float Speed { get; set; } = 150.0f;
 
+	[Export(PropertyHint.Range, "0.1,20,0.1")]
+	public float Damage { get; set; } = 1.0f;
+
 	[Export]
 	public float LifetimeSeconds { get; set; } = 3.0f;
 
@@ -54,14 +57,14 @@ public partial class Projectile : Area2D
 
 	private void OnBodyEntered(Node2D body)
 	{
-		if (body.IsInGroup("player"))
+		if (body.IsInGroup("player") || body is CatFollower)
 		{
 			return;
 		}
 
 		if (body is SlimeEnemy slime)
 		{
-			slime.TakeDamage();
+			slime.TakeDamage(Damage);
 		}
 
 		QueueFree();

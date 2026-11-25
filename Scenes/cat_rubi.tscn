@@ -194,6 +194,7 @@ size = Vector2(9.875, 8.5)
 
 [node name="Cat_rubi" type="CharacterBody2D" unique_id=772397094]
 script = ExtResource("5_cat_follower")
+FollowSpeed = 70.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2079517303]
 sprite_frames = SubResource("SpriteFrames_mkerq")

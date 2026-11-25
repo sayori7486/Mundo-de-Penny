@@ -36,6 +36,25 @@ public partial class CatFollower : CharacterBody2D
 			return;
 		}
 
+		AddCollisionExceptionWith(_player);
+		_player.AddCollisionExceptionWith(this);
+
+		foreach (Node node in GetTree().GetNodesInGroup("enemies"))
+		{
+			if (node is PhysicsBody2D enemy)
+			{
+				AddCollisionExceptionWith(enemy);
+			}
+		}
+
+		foreach (Node node in GetTree().GetNodesInGroup("cat_ignored_collisions"))
+		{
+			if (node is PhysicsBody2D obstacle)
+			{
+				AddCollisionExceptionWith(obstacle);
+			}
+		}
+
 		DialogueController dialogue =
 			GetTree().GetFirstNodeInGroup("dialogue_controller") as DialogueController;
 		if (dialogue == null)

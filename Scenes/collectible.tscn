@@ -8,6 +8,11 @@ resource_local_to_scene = true
 atlas = ExtResource("2_items")
 region = Rect2(69.02596, 33.215363, 22.3042, 28.99276)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_slowdown"]
+resource_local_to_scene = true
+atlas = ExtResource("2_items")
+region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_solid"]
 size = Vector2(16, 21)
 
@@ -18,6 +23,7 @@ radius = 16.0
 collision_mask = 0
 script = ExtResource("1_collectible")
 ItemTexture = SubResource("AtlasTexture_collectible")
+SlowdownTexture = SubResource("AtlasTexture_slowdown")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1593577144]
 texture = SubResource("AtlasTexture_collectible")

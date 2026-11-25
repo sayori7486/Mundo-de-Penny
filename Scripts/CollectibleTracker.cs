@@ -9,21 +9,21 @@ public partial class CollectibleTracker : Node
 	[Signal]
 	public delegate void AllCollectiblesCollectedEventHandler();
 
+	[Signal]
+	public delegate void CollectibleCollectedEventHandler(Collectible collectible);
+
 	private readonly HashSet<Collectible> _remaining = new();
 	private int _total;
+	private int _expectedTotal;
 
 	public int Total => _total;
 	public int Remaining => _remaining.Count;
-	public bool CollectionEnabled { get; private set; } = true;
+	public int Collected => _total - _remaining.Count;
+	public int ProgressTotal => _expectedTotal > 0 ? _expectedTotal : _total;
 
 	public override void _EnterTree()
 	{
 		AddToGroup("collectible_tracker");
-	}
-
-	public void SetCollectionEnabled(bool enabled)
-	{
-		CollectionEnabled = enabled;
 	}
 
 	public void Register(Collectible collectible)
@@ -31,28 +31,40 @@ public partial class CollectibleTracker : Node
 		if (_remaining.Add(collectible))
 		{
 			_total++;
+			EmitSignal(SignalName.CollectionProgressChanged, Collected, ProgressTotal);
 		}
+	}
+
+	public void SetExpectedTotal(int total)
+	{
+		if (total <= 0 || total < _total)
+		{
+			GD.PushError("CollectibleTracker expected total must be positive and not below registered items.");
+			return;
+		}
+
+		_expectedTotal = total;
+		EmitSignal(SignalName.CollectionProgressChanged, Collected, ProgressTotal);
 	}
 
 	public void Collect(Collectible collectible)
 	{
-		if (!CollectionEnabled || !_remaining.Remove(collectible))
+		if (!_remaining.Remove(collectible))
 		{
 			return;
 		}
 
-		InventoryHUD inventory = GetTree().GetFirstNodeInGroup("inventory_hud") as InventoryHUD;
-		if (inventory == null)
+		if (GetTree().GetFirstNodeInGroup("player") is Player player)
 		{
-			GD.PushError("InventoryHUD was not found in the current scene.");
+			player.ApplyCollectibleEffect(collectible.Effect, collectible.EffectDurationSeconds);
 		}
 		else
 		{
-			inventory.AddCollectedItem(collectible.ItemTexture);
+			GD.PushError("Player was not found while applying a collectible effect.");
 		}
 
-		int collected = _total - _remaining.Count;
-		EmitSignal(SignalName.CollectionProgressChanged, collected, _total);
+		EmitSignal(SignalName.CollectibleCollected, collectible);
+		EmitSignal(SignalName.CollectionProgressChanged, Collected, ProgressTotal);
 
 		if (_remaining.Count == 0 && _total > 0)
 		{

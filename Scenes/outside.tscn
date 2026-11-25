@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://dxhie6lhfi6ts" path="res://Scenes/cat_rubi.tscn" id="12_y6wel"]
 [ext_resource type="PackedScene" uid="uid://spv4a2ltn080" path="res://Scenes/slime.tscn" id="13_l7a3p"]
 [ext_resource type="Script" uid="uid://cfm6cnyrg7fxw" path="res://Scripts/OutsideController.cs" id="14_outside_controller"]
+[ext_resource type="PackedScene" path="res://Scenes/tree_leaves_overlay.tscn" id="15_tree_leaves"]
 
 [sub_resource type="Resource" id="Resource_r20i3"]
 script = ExtResource("6_omx0w")
@@ -60,7 +61,7 @@ Text = "[b]Penny:[/b] Entendido! É o certo a se fazer!"
 IsPlayer = true
 metadata/_custom_type_script = "uid://bap6dlhby013p"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1uw6u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r20i3"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
@@ -68,7 +69,7 @@ region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o28pm"]
 size = Vector2(13, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r20i3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2imq"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(0.63277245, 33.96223, 14.139489, 14.11076)
@@ -76,7 +77,7 @@ region = Rect2(0.63277245, 33.96223, 14.139489, 14.11076)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t63xj"]
 size = Vector2(13, 12.5)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e2imq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjyhx"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(0.53651094, 49.879913, 14.007359, 13.707787)
@@ -84,7 +85,7 @@ region = Rect2(0.53651094, 49.879913, 14.007359, 13.707787)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7wex4"]
 size = Vector2(13, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sjyhx"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_684ki"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(16.632462, 49.610413, 13.673517, 14.676971)
@@ -92,7 +93,7 @@ region = Rect2(16.632462, 49.610413, 13.673517, 14.676971)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y5x7m"]
 size = Vector2(13, 12.5)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_684ki"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymkd4"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(16.392616, 34.214725, 14.078295, 13.796299)
@@ -111,6 +112,9 @@ radius = 38.013157
 
 [node name="Outside" type="Node2D" unique_id=477998527]
 script = ExtResource("14_outside_controller")
+SlimeScene = ExtResource("13_l7a3p")
+CollectibleScene = ExtResource("2_hhqqv")
+CollectibleTexturesByEffect = Array[AtlasTexture]([SubResource("AtlasTexture_sjyhx"), SubResource("AtlasTexture_e2imq"), SubResource("AtlasTexture_684ki"), SubResource("AtlasTexture_r20i3"), SubResource("AtlasTexture_ymkd4")])
 
 [node name="SceneFadeIn" parent="." unique_id=709661739 instance=ExtResource("9_fade_in")]
 
@@ -132,64 +136,8 @@ CharactersPerSecond = 12.0
 [node name="Actors" type="Node2D" parent="." unique_id=1542634607]
 y_sort_enabled = true
 
-[node name="Collectible" parent="Actors" unique_id=238363746 instance=ExtResource("2_hhqqv")]
-position = Vector2(283, 316)
-ItemTexture = SubResource("AtlasTexture_1uw6u")
-
-[node name="Sprite2D" parent="Actors/Collectible" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_1uw6u")
-
-[node name="CollisionShape2D" parent="Actors/Collectible" index="1" unique_id=1149369530]
-position = Vector2(0.5, 0)
-shape = SubResource("RectangleShape2D_o28pm")
-
-[node name="Collectible2" parent="Actors" unique_id=914669277 instance=ExtResource("2_hhqqv")]
-position = Vector2(372, -212)
-ItemTexture = SubResource("AtlasTexture_r20i3")
-
-[node name="Sprite2D" parent="Actors/Collectible2" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_r20i3")
-
-[node name="CollisionShape2D" parent="Actors/Collectible2" index="1" unique_id=1149369530]
-position = Vector2(-0.5, -0.25)
-shape = SubResource("RectangleShape2D_t63xj")
-
-[node name="Collectible3" parent="Actors" unique_id=786469739 instance=ExtResource("2_hhqqv")]
-position = Vector2(-364, -142)
-ItemTexture = SubResource("AtlasTexture_e2imq")
-
-[node name="Sprite2D" parent="Actors/Collectible3" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_e2imq")
-
-[node name="CollisionShape2D" parent="Actors/Collectible3" index="1" unique_id=1149369530]
-position = Vector2(-0.5, 1)
-shape = SubResource("RectangleShape2D_7wex4")
-
-[node name="Collectible4" parent="Actors" unique_id=1604623177 instance=ExtResource("2_hhqqv")]
-position = Vector2(-361, 280)
-ItemTexture = SubResource("AtlasTexture_sjyhx")
-
-[node name="Sprite2D" parent="Actors/Collectible4" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_sjyhx")
-
-[node name="CollisionShape2D" parent="Actors/Collectible4" index="1" unique_id=1149369530]
-position = Vector2(0.5, -0.25)
-shape = SubResource("RectangleShape2D_y5x7m")
-
-[node name="Collectible5" parent="Actors" unique_id=1989320415 instance=ExtResource("2_hhqqv")]
-position = Vector2(-1, -249)
-ItemTexture = SubResource("AtlasTexture_684ki")
-
-[node name="Sprite2D" parent="Actors/Collectible5" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_684ki")
-
-[node name="CollisionShape2D" parent="Actors/Collectible5" index="1" unique_id=1149369530]
-position = Vector2(0, 0.25)
-shape = SubResource("RectangleShape2D_jk7mt")
-
 [node name="Player" parent="Actors" unique_id=310777521 instance=ExtResource("4_8c3xh")]
 position = Vector2(-1, 205)
-Speed = 110.0
 AnimationSet = 1
 FollowPlayer = true
 CameraLimits = Rect2(-576, -448, 1152, 896)
@@ -202,106 +150,130 @@ texture = ExtResource("7_8c3xh")
 position = Vector2(-147, 106)
 texture = ExtResource("8_wh1al")
 
+[node name="LeavesOverlay" parent="Actors/arvore" unique_id=834481401 instance=ExtResource("15_tree_leaves")]
+
 [node name="arvore2" type="Sprite2D" parent="Actors" unique_id=509535873]
 position = Vector2(-96, 276)
 texture = ExtResource("8_wh1al")
+
+[node name="LeavesOverlay" parent="Actors/arvore2" unique_id=1929763393 instance=ExtResource("15_tree_leaves")]
 
 [node name="arvore3" type="Sprite2D" parent="Actors" unique_id=1306916700]
 position = Vector2(-234, 234)
 texture = ExtResource("8_wh1al")
 
+[node name="LeavesOverlay" parent="Actors/arvore3" unique_id=1199717679 instance=ExtResource("15_tree_leaves")]
+
 [node name="arvore4" type="Sprite2D" parent="Actors" unique_id=910511564]
 position = Vector2(-474, 216)
 texture = ExtResource("8_wh1al")
+
+[node name="LeavesOverlay" parent="Actors/arvore4" unique_id=248601477 instance=ExtResource("15_tree_leaves")]
 
 [node name="arvore5" type="Sprite2D" parent="Actors" unique_id=1278865764]
 position = Vector2(-321, 375)
 texture = ExtResource("8_wh1al")
 
+[node name="LeavesOverlay" parent="Actors/arvore5" unique_id=1671085274 instance=ExtResource("15_tree_leaves")]
+
 [node name="arvore6" type="Sprite2D" parent="Actors" unique_id=197916569]
 position = Vector2(90, 384)
 texture = ExtResource("8_wh1al")
+
+[node name="LeavesOverlay" parent="Actors/arvore6" unique_id=618191454 instance=ExtResource("15_tree_leaves")]
 
 [node name="arvore7" type="Sprite2D" parent="Actors" unique_id=1406954168]
 position = Vector2(183, 129)
 texture = ExtResource("8_wh1al")
 
+[node name="LeavesOverlay" parent="Actors/arvore7" unique_id=894811779 instance=ExtResource("15_tree_leaves")]
+
 [node name="arvore8" type="Sprite2D" parent="Actors" unique_id=452411321]
 position = Vector2(489, 159)
 texture = ExtResource("8_wh1al")
+
+[node name="LeavesOverlay" parent="Actors/arvore8" unique_id=596392010 instance=ExtResource("15_tree_leaves")]
 
 [node name="arvore9" type="Sprite2D" parent="Actors" unique_id=439653887]
 position = Vector2(387, 273)
 texture = ExtResource("8_wh1al")
 
+[node name="LeavesOverlay" parent="Actors/arvore9" unique_id=933664696 instance=ExtResource("15_tree_leaves")]
+
 [node name="arvore10" type="Sprite2D" parent="Actors" unique_id=1335885457]
 position = Vector2(471, 378)
 texture = ExtResource("8_wh1al")
+
+[node name="LeavesOverlay" parent="Actors/arvore10" unique_id=440440703 instance=ExtResource("15_tree_leaves")]
 
 [node name="arvore11" type="Sprite2D" parent="Actors" unique_id=1966049077]
 position = Vector2(-144, -130)
 texture = ExtResource("8_wh1al")
 
+[node name="LeavesOverlay" parent="Actors/arvore11" unique_id=629106273 instance=ExtResource("15_tree_leaves")]
+
 [node name="arvore12" type="Sprite2D" parent="Actors" unique_id=894642269]
 position = Vector2(-350, -240)
 texture = ExtResource("8_wh1al")
+
+[node name="LeavesOverlay" parent="Actors/arvore12" unique_id=1447913457 instance=ExtResource("15_tree_leaves")]
 
 [node name="arvore13" type="Sprite2D" parent="Actors" unique_id=304231973]
 position = Vector2(-525, -279)
 texture = ExtResource("8_wh1al")
 
+[node name="LeavesOverlay" parent="Actors/arvore13" unique_id=1284514275 instance=ExtResource("15_tree_leaves")]
+
 [node name="arvore14" type="Sprite2D" parent="Actors" unique_id=1859555076]
 position = Vector2(-516, -82)
 texture = ExtResource("8_wh1al")
+
+[node name="LeavesOverlay" parent="Actors/arvore14" unique_id=276876330 instance=ExtResource("15_tree_leaves")]
 
 [node name="arvore15" type="Sprite2D" parent="Actors" unique_id=205625965]
 position = Vector2(-451, -378)
 texture = ExtResource("8_wh1al")
 
+[node name="LeavesOverlay" parent="Actors/arvore15" unique_id=883632026 instance=ExtResource("15_tree_leaves")]
+
 [node name="arvore16" type="Sprite2D" parent="Actors" unique_id=1436668338]
 position = Vector2(-451, -378)
 texture = ExtResource("8_wh1al")
+
+[node name="LeavesOverlay" parent="Actors/arvore16" unique_id=1998628957 instance=ExtResource("15_tree_leaves")]
 
 [node name="arvore17" type="Sprite2D" parent="Actors" unique_id=1003632011]
 position = Vector2(-525, -386)
 texture = ExtResource("8_wh1al")
 
+[node name="LeavesOverlay" parent="Actors/arvore17" unique_id=914291509 instance=ExtResource("15_tree_leaves")]
+
 [node name="arvore18" type="Sprite2D" parent="Actors" unique_id=892206538]
 position = Vector2(138, -75)
 texture = ExtResource("8_wh1al")
+
+[node name="LeavesOverlay" parent="Actors/arvore18" unique_id=658393940 instance=ExtResource("15_tree_leaves")]
 
 [node name="arvore19" type="Sprite2D" parent="Actors" unique_id=392905240]
 position = Vector2(249, -162)
 texture = ExtResource("8_wh1al")
 
+[node name="LeavesOverlay" parent="Actors/arvore19" unique_id=1717868132 instance=ExtResource("15_tree_leaves")]
+
 [node name="arvore20" type="Sprite2D" parent="Actors" unique_id=177470689]
 position = Vector2(504, -258)
 texture = ExtResource("8_wh1al")
+
+[node name="LeavesOverlay" parent="Actors/arvore20" unique_id=869059172 instance=ExtResource("15_tree_leaves")]
 
 [node name="arvore21" type="Sprite2D" parent="Actors" unique_id=1015418613]
 position = Vector2(492, -87)
 texture = ExtResource("8_wh1al")
 
-[node name="Slime" parent="Actors" unique_id=413196780 instance=ExtResource("13_l7a3p")]
-position = Vector2(194, 5)
-
-[node name="Slime2" parent="Actors" unique_id=1581835648 instance=ExtResource("13_l7a3p")]
-position = Vector2(-261, 23)
-
-[node name="Slime3" parent="Actors" unique_id=126210573 instance=ExtResource("13_l7a3p")]
-position = Vector2(-234, -188)
-
-[node name="Slime4" parent="Actors" unique_id=1074238262 instance=ExtResource("13_l7a3p")]
-position = Vector2(348, -151)
-MoveSpeed = 70.0
-AttackRange = 30.0
-
-[node name="Slime5" parent="Actors" unique_id=883815602 instance=ExtResource("13_l7a3p")]
-position = Vector2(-276, 328)
+[node name="LeavesOverlay" parent="Actors/arvore21" unique_id=1248399049 instance=ExtResource("15_tree_leaves")]
 
 [node name="Cat_rubi" parent="Actors" unique_id=772397094 instance=ExtResource("12_y6wel")]
 position = Vector2(1, 213)
-FollowSpeed = 110.0
 
 [node name="HealthHUD" parent="." unique_id=1109567757 instance=ExtResource("11_health_hud")]
 
@@ -353,115 +325,115 @@ position = Vector2(5, 463)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Floresta2" unique_id=1363657426]
 polygon = PackedVector2Array(283, -818, 301, -817, 306, -815, 317, -815, 330, -791, 336, -788, 350, -789, 353, -792, 374, -825, 417, -825, 423, -822, 437, -823, 440, -826, 463, -804, 469, -801, 483, -802, 486, -805, 512, -832, 518, -829, 529, -829, 545, -799, 551, -796, 565, -797, 567, -799, 567, -909, 283, -910)
 
-[node name="Fonte" type="StaticBody2D" parent="Collisions" unique_id=1940472147]
+[node name="Fonte" type="StaticBody2D" parent="Collisions" unique_id=1940472147 groups=["cat_ignored_collisions"]]
 position = Vector2(5, 463)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Fonte" unique_id=279979142]
 polygon = PackedVector2Array(11, -405, 25, -408, 37, -413, 42, -418, 44, -422, 44, -437, 41, -443, 37, -447, 33, -449, 17, -454, 7, -456, -17, -456, -27, -454, -40, -450, -47, -447, -51, -443, -53, -439, -54, -437, -54, -422, -51, -417, -48, -414, -41, -410, -31, -407, -21, -405)
 
-[node name="arvore" type="StaticBody2D" parent="Collisions" unique_id=301768114]
+[node name="arvore" type="StaticBody2D" parent="Collisions" unique_id=301768114 groups=["cat_ignored_collisions"]]
 position = Vector2(5, 463)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore" unique_id=1667670531]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore2" type="StaticBody2D" parent="Collisions" unique_id=1585243931]
+[node name="arvore2" type="StaticBody2D" parent="Collisions" unique_id=1585243931 groups=["cat_ignored_collisions"]]
 position = Vector2(-133, 421)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore2" unique_id=1056511686]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore3" type="StaticBody2D" parent="Collisions" unique_id=318546619]
+[node name="arvore3" type="StaticBody2D" parent="Collisions" unique_id=318546619 groups=["cat_ignored_collisions"]]
 position = Vector2(-220, 562)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore3" unique_id=1001814112]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore4" type="StaticBody2D" parent="Collisions" unique_id=1332091225]
+[node name="arvore4" type="StaticBody2D" parent="Collisions" unique_id=1332091225 groups=["cat_ignored_collisions"]]
 position = Vector2(-373, 403)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore4" unique_id=1244513570]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore5" type="StaticBody2D" parent="Collisions" unique_id=1758486982]
+[node name="arvore5" type="StaticBody2D" parent="Collisions" unique_id=1758486982 groups=["cat_ignored_collisions"]]
 position = Vector2(-46, 293)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore5" unique_id=639738970]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore6" type="StaticBody2D" parent="Collisions" unique_id=1681437197]
+[node name="arvore6" type="StaticBody2D" parent="Collisions" unique_id=1681437197 groups=["cat_ignored_collisions"]]
 position = Vector2(-43, 57)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore6" unique_id=593228880]
-polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
+polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -110, -182, -93, -182, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore7" type="StaticBody2D" parent="Collisions" unique_id=1886790291]
+[node name="arvore7" type="StaticBody2D" parent="Collisions" unique_id=1886790291 groups=["cat_ignored_collisions"]]
 position = Vector2(-249, -53)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore7" unique_id=1431146692]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore8" type="StaticBody2D" parent="Collisions" unique_id=1382239697]
+[node name="arvore8" type="StaticBody2D" parent="Collisions" unique_id=1382239697 groups=["cat_ignored_collisions"]]
 position = Vector2(-424, -92)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore8" unique_id=1143501167]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore9" type="StaticBody2D" parent="Collisions" unique_id=1652716830]
+[node name="arvore9" type="StaticBody2D" parent="Collisions" unique_id=1652716830 groups=["cat_ignored_collisions"]]
 position = Vector2(-415, 105)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore9" unique_id=843438740]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore10" type="StaticBody2D" parent="Collisions" unique_id=1392702838]
+[node name="arvore10" type="StaticBody2D" parent="Collisions" unique_id=1392702838 groups=["cat_ignored_collisions"]]
 position = Vector2(284, 316)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore10" unique_id=137482043]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore11" type="StaticBody2D" parent="Collisions" unique_id=1323244811]
+[node name="arvore11" type="StaticBody2D" parent="Collisions" unique_id=1323244811 groups=["cat_ignored_collisions"]]
 position = Vector2(191, 571)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore11" unique_id=484802863]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore12" type="StaticBody2D" parent="Collisions" unique_id=1922967500]
+[node name="arvore12" type="StaticBody2D" parent="Collisions" unique_id=1922967500 groups=["cat_ignored_collisions"]]
 position = Vector2(572, 565)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore12" unique_id=1164048475]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore13" type="StaticBody2D" parent="Collisions" unique_id=445418989]
+[node name="arvore13" type="StaticBody2D" parent="Collisions" unique_id=445418989 groups=["cat_ignored_collisions"]]
 position = Vector2(488, 460)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore13" unique_id=1222093986]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore14" type="StaticBody2D" parent="Collisions" unique_id=1147843363]
+[node name="arvore14" type="StaticBody2D" parent="Collisions" unique_id=1147843363 groups=["cat_ignored_collisions"]]
 position = Vector2(590, 346)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore14" unique_id=1924704908]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore15" type="StaticBody2D" parent="Collisions" unique_id=1494124474]
+[node name="arvore15" type="StaticBody2D" parent="Collisions" unique_id=1494124474 groups=["cat_ignored_collisions"]]
 position = Vector2(593, 100)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore15" unique_id=1804565474]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore16" type="StaticBody2D" parent="Collisions" unique_id=782602821]
+[node name="arvore16" type="StaticBody2D" parent="Collisions" unique_id=782602821 groups=["cat_ignored_collisions"]]
 position = Vector2(605, -71)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore16" unique_id=809606547]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore17" type="StaticBody2D" parent="Collisions" unique_id=336420124]
+[node name="arvore17" type="StaticBody2D" parent="Collisions" unique_id=336420124 groups=["cat_ignored_collisions"]]
 position = Vector2(350, 25)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore17" unique_id=2113350848]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
 
-[node name="arvore18" type="StaticBody2D" parent="Collisions" unique_id=383944702]
+[node name="arvore18" type="StaticBody2D" parent="Collisions" unique_id=383944702 groups=["cat_ignored_collisions"]]
 position = Vector2(239, 112)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore18" unique_id=962753487]

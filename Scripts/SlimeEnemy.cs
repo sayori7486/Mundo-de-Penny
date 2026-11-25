@@ -14,6 +14,9 @@ public partial class SlimeEnemy : CharacterBody2D
 	[Export(PropertyHint.Range, "1,400,1")]
 	public float LoseRange { get; set; } = 150.0f;
 
+	[Export(PropertyHint.Range, "1,300,1")]
+	public float ItemDetectionRange { get; set; } = 90.0f;
+
 	[Export(PropertyHint.Range, "1,100,1")]
 	public float WanderSpeed { get; set; } = 18.0f;
 
@@ -47,7 +50,7 @@ public partial class SlimeEnemy : CharacterBody2D
 	private float _attackCooldownRemaining;
 	private float _wanderTimeRemaining;
 	private Vector2 _wanderDirection;
-	private int _currentHealth;
+	private float _currentHealth;
 	private float _originalSpriteAlpha;
 	private Tween _hitFlashTween = null!;
 	private bool _isAttacking;
@@ -67,6 +70,7 @@ public partial class SlimeEnemy : CharacterBody2D
 		if (MaxHealth < 1
 			|| DetectionRange < 0.0f
 			|| LoseRange <= DetectionRange
+			|| ItemDetectionRange <= 0.0f
 			|| WanderSpeed < 0.0f
 			|| WanderMoveDurationMin < 0.0f
 			|| WanderMoveDurationMax < WanderMoveDurationMin
@@ -122,6 +126,11 @@ public partial class SlimeEnemy : CharacterBody2D
 		{
 			if (distanceSquared > DetectionRange * DetectionRange)
 			{
+				if (TryPursueCollectible())
+				{
+					return;
+				}
+
 				ProcessWandering(delta);
 				return;
 			}
@@ -168,15 +177,21 @@ public partial class SlimeEnemy : CharacterBody2D
 		PlayAnimation($"walk_{_facing}");
 	}
 
-	public void TakeDamage()
+	public void TakeDamage(float damage = 1.0f)
 	{
 		if (_isDefeated)
 		{
 			return;
 		}
 
-		_currentHealth--;
-		_isDefeated = _currentHealth <= 0;
+		if (damage <= 0.0f || !float.IsFinite(damage))
+		{
+			GD.PushError("SlimeEnemy received invalid damage.");
+			return;
+		}
+
+		_currentHealth = Mathf.Max(0.0f, _currentHealth - damage);
+		_isDefeated = _currentHealth <= 0.0f;
 		if (_isDefeated)
 		{
 			Velocity = Vector2.Zero;
@@ -256,6 +271,42 @@ public partial class SlimeEnemy : CharacterBody2D
 			StopMoving();
 			PlayAnimation($"idle_{_facing}");
 		}
+	}
+
+	private bool TryPursueCollectible()
+	{
+		float detectionRangeSquared = ItemDetectionRange * ItemDetectionRange;
+		float closestDistanceSquared = detectionRangeSquared;
+		Collectible target = null!;
+
+		foreach (Node node in GetTree().GetNodesInGroup("collectibles"))
+		{
+			if (node is not Collectible collectible
+				|| collectible.Effect == Collectible.EffectType.Slowdown
+				|| collectible.IsQueuedForDeletion())
+			{
+				continue;
+			}
+
+			float distanceSquared = GlobalPosition.DistanceSquaredTo(collectible.GlobalPosition);
+			if (distanceSquared < closestDistanceSquared)
+			{
+				closestDistanceSquared = distanceSquared;
+				target = collectible;
+			}
+		}
+
+		if (target == null)
+		{
+			return false;
+		}
+
+		Vector2 toCollectible = target.GlobalPosition - GlobalPosition;
+		UpdateFacing(toCollectible);
+		Velocity = toCollectible.Normalized() * MoveSpeed;
+		MoveAndSlide();
+		PlayAnimation($"walk_{_facing}");
+		return true;
 	}
 
 	private void StartWanderMove()

@@ -471,8 +471,8 @@ AttackRange = 20.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1402955447]
 sprite_frames = SubResource("SpriteFrames_mkerq")
-animation = &"walk_left"
-frame_progress = 0.18119563
+animation = &"attack_down"
+frame = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1374131725]
 shape = SubResource("CircleShape2D_mkerq")
