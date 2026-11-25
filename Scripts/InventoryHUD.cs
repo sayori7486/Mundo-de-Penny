@@ -7,6 +7,7 @@ public partial class InventoryHUD : CanvasLayer
 
 	private HBoxContainer _items = null!;
 	private Control _objectiveOverlay = null!;
+	private Label _objectiveLabel = null!;
 
 	public override void _EnterTree()
 	{
@@ -79,6 +80,21 @@ public partial class InventoryHUD : CanvasLayer
 		_items.AddChild(icon);
 	}
 
+	public void SetObjectiveText(string text, bool showOverlay = false)
+	{
+		ObjectiveText = text;
+		if (_objectiveOverlay == null)
+		{
+			BuildObjectiveOverlay();
+		}
+
+		_objectiveLabel.Text = $"Objetivo:\n{ObjectiveText}";
+		if (showOverlay)
+		{
+			_objectiveOverlay.Visible = true;
+		}
+	}
+
 	private void BuildObjectiveOverlay()
 	{
 		_objectiveOverlay = new Control
@@ -97,7 +113,7 @@ public partial class InventoryHUD : CanvasLayer
 		background.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
 		_objectiveOverlay.AddChild(background);
 
-		var objective = new Label
+		_objectiveLabel = new Label
 		{
 			AnchorLeft = 0.08f,
 			AnchorTop = 0.2f,
@@ -109,8 +125,8 @@ public partial class InventoryHUD : CanvasLayer
 			AutowrapMode = TextServer.AutowrapMode.WordSmart,
 			MouseFilter = Control.MouseFilterEnum.Ignore,
 		};
-		objective.AddThemeFontSizeOverride("font_size", 6);
-		objective.AddThemeColorOverride("font_color", Colors.White);
-		_objectiveOverlay.AddChild(objective);
+		_objectiveLabel.AddThemeFontSizeOverride("font_size", 6);
+		_objectiveLabel.AddThemeColorOverride("font_color", Colors.White);
+		_objectiveOverlay.AddChild(_objectiveLabel);
 	}
 }

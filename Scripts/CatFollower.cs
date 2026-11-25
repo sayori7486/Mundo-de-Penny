@@ -40,7 +40,7 @@ public partial class CatFollower : CharacterBody2D
 			GetTree().GetFirstNodeInGroup("dialogue_controller") as DialogueController;
 		if (dialogue == null)
 		{
-			GD.PushError("CatFollower could not find the dialogue controller.");
+			StartFollowing();
 			return;
 		}
 

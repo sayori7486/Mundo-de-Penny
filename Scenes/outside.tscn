@@ -106,6 +106,9 @@ size = Vector2(69.5, 897)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c2a8f"]
 size = Vector2(1286, 41.5)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_mkerq"]
+radius = 38.013157
+
 [node name="Outside" type="Node2D" unique_id=477998527]
 script = ExtResource("14_outside_controller")
 
@@ -463,6 +466,13 @@ position = Vector2(239, 112)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore18" unique_id=962753487]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
+
+[node name="Porta" type="Area2D" parent="." unique_id=192027149]
+position = Vector2(0, -308)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Porta" unique_id=1172533478]
+position = Vector2(-1, -7)
+shape = SubResource("CircleShape2D_mkerq")
 
 [editable path="Actors/Collectible"]
 [editable path="Actors/Collectible2"]

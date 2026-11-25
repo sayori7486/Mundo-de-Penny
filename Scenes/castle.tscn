@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://dm3tdx8eofpeb"]
+
+[ext_resource type="Texture2D" uid="uid://b55gs1jg635nb" path="res://Sprites/Map/castle map.png" id="1_ayoda"]
+[ext_resource type="PackedScene" uid="uid://gre1yqsgs4fh" path="res://Scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://b6wh22c1mtwo" path="res://Scenes/health_hud.tscn" id="3_health_hud"]
+[ext_resource type="PackedScene" path="res://Scenes/scene_fade_in.tscn" id="4_fade_in"]
+[ext_resource type="PackedScene" uid="uid://dxhie6lhfi6ts" path="res://Scenes/cat_rubi.tscn" id="5_cat_rubi"]
+
+[node name="castle" type="Node2D" unique_id=1447868046]
+
+[node name="SceneFadeIn" parent="." unique_id=1371877199 instance=ExtResource("4_fade_in")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=544024869]
+texture = ExtResource("1_ayoda")
+
+[node name="Player" parent="." unique_id=1749177291 instance=ExtResource("2_player")]
+position = Vector2(2, 403)
+AnimationSet = 1
+FollowPlayer = true
+CameraLimits = Rect2(-576, -448, 1152, 896)
+
+[node name="Cat_rubi" parent="." unique_id=121428285 instance=ExtResource("5_cat_rubi")]
+position = Vector2(-14, 404)
+FollowSpeed = 110.0
+
+[node name="HealthHUD" parent="." unique_id=33797915 instance=ExtResource("3_health_hud")]
+
+[node name="Collisions" type="Node2D" parent="." unique_id=284393146]
+
+[node name="Wall" type="StaticBody2D" parent="Collisions" unique_id=363500094]
+position = Vector2(-1, -485)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall" unique_id=1992265458]
+polygon = PackedVector2Array(-529, 293, -110, 293, -110, 101, 111, 101, 111, 293, 530, 293, 530, 31, -535, 31)
+
+[node name="Wall2" type="StaticBody2D" parent="Collisions" unique_id=612379669]
+position = Vector2(-2, 450)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall2" unique_id=174164226]
+polygon = PackedVector2Array(-77, -34, 81, -34, 3, -23)
+
+[node name="Wall3" type="StaticBody2D" parent="Collisions" unique_id=194556838]
+position = Vector2(-652, 239)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall3" unique_id=1270817304]
+polygon = PackedVector2Array(573, 177, 573, -79, 125, -79, 125, -431, 2, -436, 17, 161)
+
+[node name="Wall4" type="StaticBody2D" parent="Collisions" unique_id=977092234]
+position = Vector2(562, 248)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall4" unique_id=1892510033]
+polygon = PackedVector2Array(-483, 168, -483, -89, -36, -88, -36, -440, 21, -440, 46, 0)
+
+[node name="Wall5" type="StaticBody2D" parent="Collisions" unique_id=1910448230]
+position = Vector2(562, 248)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall5" unique_id=2144066921]
+polygon = PackedVector2Array(-676, -440, -673, -440, -673, -413, -671, -413, -671, -376, -677, -376, -677, -413, -676, -413)
+
+[node name="Wall6" type="StaticBody2D" parent="Collisions" unique_id=1037443015]
+position = Vector2(562, 248)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall6" unique_id=1376512536]
+polygon = PackedVector2Array(-452, -440, -449, -440, -449, -413, -447, -413, -447, -376, -453, -376, -453, -413, -452, -413)

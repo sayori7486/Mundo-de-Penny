@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bksumhj7fwt5x"]
+
+[ext_resource type="Texture2D" uid="uid://cl7jc8quo0hof" path="res://Sprites/Map/outside map2.png" id="1_4ie76"]
+
+[node name="outside dark" type="Node2D" unique_id=1970743569]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1581632173]
+texture = ExtResource("1_4ie76")
