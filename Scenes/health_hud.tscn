@@ -146,11 +146,10 @@ layer = 3
 script = ExtResource("1_health_hud")
 
 [node name="AnimatedHealth" type="AnimatedSprite2D" parent="." unique_id=451113760]
-position = Vector2(49, 18)
-scale = Vector2(0.08055555, 0.08055555)
+position = Vector2(49, 18.000002)
+scale = Vector2(0.081, 0.081)
 sprite_frames = SubResource("SpriteFrames_health")
 animation = &"idle"
-frame_progress = 0.910966
 
 [node name="LifeStage" type="AnimatedSprite2D" parent="." unique_id=164107700]
 position = Vector2(21, 25)
@@ -160,8 +159,8 @@ animation = &"full"
 frame_progress = 0.48785666
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=444352864]
-position = Vector2(21, 30)
-scale = Vector2(0.081, 0.087)
+position = Vector2(21.000002, 30)
+scale = Vector2(0.081, 0.081)
 texture = ExtResource("2_rose1")
 region_enabled = true
 region_rect = Rect2(1863.55, 263.90677, 436.44995, 258.64798)

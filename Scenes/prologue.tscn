@@ -12,5 +12,5 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_prologue")
 NarrativeFont = ExtResource("2_font")
-Pages = Array[String](["Certo... ja foi quase tudo...", "Só falta pegar os meus bichinhos, assim meu quarto finalmente vai estar arrumado!", "Objetivo: colete os ursos de pelúcia"])
+Pages = Array[String](["Certo...", "Ja foi quase tudo...", "Só falta pegar os meus bichinhos.", "Assim, meu quarto finalmente vai estar arrumado!", "Objetivo: colete os ursos de pelúcia"])
 CharactersPerSecond = 8.0

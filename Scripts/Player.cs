@@ -3,6 +3,17 @@ using Godot;
 
 public partial class Player : CharacterBody2D
 {
+	private const float DashStaminaCost = 0.5f;
+	private const float DashDurationSeconds = 0.15f;
+	private const float DashSpeedMultiplier = 3.0f;
+	private const float DashInputBufferSeconds = 0.2f;
+	private const float DashEchoIntervalSeconds = 0.04f;
+	private const float DashEchoFadeSeconds = 0.22f;
+	private const float StaminaRecoveryDurationSeconds = 1.0f;
+
+	[Signal]
+	public delegate void StaminaChangedEventHandler(float currentStamina);
+
 	public enum MovementAnimationSet
 	{
 		Walk,
@@ -44,9 +55,16 @@ public partial class Player : CharacterBody2D
 	private Color _baseSpriteColor;
 	private float _rainbowHue;
 	private string _facing = "down";
+	private float _stamina = 1.0f;
+	private float _dashTimeRemaining;
+	private float _dashInputBufferRemaining;
+	private float _dashEchoTimeRemaining;
+	private Vector2 _dashDirection;
 	private bool _hasPermanentHealthEffect;
 	private bool _isAttacking;
 	private bool _projectileSpawned;
+
+	public float Stamina => _stamina;
 
 	public override void _EnterTree()
 	{
@@ -194,6 +212,37 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		float deltaSeconds = (float)delta;
+		if (Input.IsActionJustPressed("dash"))
+		{
+			_dashInputBufferRemaining = DashInputBufferSeconds;
+		}
+		else
+		{
+			_dashInputBufferRemaining = Mathf.Max(
+				0.0f,
+				_dashInputBufferRemaining - deltaSeconds
+			);
+		}
+
+		UpdateStamina(deltaSeconds);
+
+		if (_dashTimeRemaining > 0.0f)
+		{
+			MoveDuringDash(deltaSeconds);
+			return;
+		}
+
+		Vector2 direction = GetMovementDirection();
+		if (!_isAttacking
+			&& _dashInputBufferRemaining > 0.0f
+			&& _stamina >= DashStaminaCost)
+		{
+			StartDash(direction);
+			MoveDuringDash(deltaSeconds);
+			return;
+		}
+
 		if (AnimationSet == MovementAnimationSet.Staff
 			&& !_isAttacking
 			&& Input.IsActionJustPressed("attack"))
@@ -208,16 +257,29 @@ public partial class Player : CharacterBody2D
 			return;
 		}
 
-		Vector2 direction = new(
+		Velocity = direction * Speed * GetSpeedMultiplier();
+		MoveAndSlide();
+
+		if (direction == Vector2.Zero)
+		{
+			PlayAnimation(GetIdleAnimationName());
+			return;
+		}
+
+		UpdateMovementAnimation(direction);
+	}
+
+	private Vector2 GetMovementDirection()
+	{
+		var direction = new Vector2(
 			Input.GetAxis("move_left", "move_right"),
 			Input.GetAxis("move_up", "move_down")
 		);
+		return direction.Length() > 1.0f ? direction.Normalized() : direction;
+	}
 
-		if (direction.Length() > 1.0f)
-		{
-			direction = direction.Normalized();
-		}
-
+	private float GetSpeedMultiplier()
+	{
 		float speedMultiplier = 1.0f;
 		if (HasEffect(Collectible.EffectType.SpeedBoost))
 		{
@@ -234,20 +296,127 @@ public partial class Player : CharacterBody2D
 			speedMultiplier *= 1.15f;
 		}
 
-		Velocity = direction * Speed * speedMultiplier;
-		MoveAndSlide();
+		return speedMultiplier;
+	}
 
-		if (direction == Vector2.Zero)
+	private void StartDash(Vector2 movementDirection)
+	{
+		_dashDirection = movementDirection == Vector2.Zero
+			? GetFacingDirection()
+			: movementDirection;
+		_dashTimeRemaining = DashDurationSeconds;
+		_dashInputBufferRemaining = 0.0f;
+		_dashEchoTimeRemaining = 0.0f;
+		SetStamina(_stamina - DashStaminaCost);
+	}
+
+	private Vector2 GetFacingDirection()
+	{
+		return _facing switch
 		{
-			PlayAnimation(GetIdleAnimationName());
+			"up" => Vector2.Up,
+			"left" => Vector2.Left,
+			"right" => Vector2.Right,
+			_ => Vector2.Down,
+		};
+	}
+
+	private void MoveDuringDash(float delta)
+	{
+		_dashTimeRemaining = Mathf.Max(0.0f, _dashTimeRemaining - delta);
+		_dashEchoTimeRemaining -= delta;
+		if (_dashEchoTimeRemaining <= 0.0f)
+		{
+			SpawnDashEcho();
+			_dashEchoTimeRemaining = DashEchoIntervalSeconds;
+		}
+
+		Velocity = _dashDirection * Speed * GetSpeedMultiplier() * DashSpeedMultiplier;
+		MoveAndSlide();
+		UpdateMovementAnimation(_dashDirection);
+
+		if (_dashTimeRemaining <= 0.0f)
+		{
+			Velocity = Vector2.Zero;
+		}
+	}
+
+	private void SpawnDashEcho()
+	{
+		if (_sprite.SpriteFrames == null)
+		{
+			GD.PushError("Player cannot create a dash echo without SpriteFrames.");
 			return;
 		}
 
+		Texture2D frameTexture = _sprite.SpriteFrames.GetFrameTexture(
+			_sprite.Animation,
+			_sprite.Frame
+		);
+		if (frameTexture == null)
+		{
+			GD.PushError("Player cannot create a dash echo without a current animation frame.");
+			return;
+		}
+
+		Node parent = GetParent();
+		if (parent == null)
+		{
+			GD.PushError("Player cannot create a dash echo without a parent node.");
+			return;
+		}
+
+		var echo = new Sprite2D
+		{
+			Texture = frameTexture,
+			TextureFilter = _sprite.TextureFilter,
+			Centered = _sprite.Centered,
+			Offset = _sprite.Offset,
+			FlipH = _sprite.FlipH,
+			FlipV = _sprite.FlipV,
+			Modulate = _sprite.Modulate,
+			ZIndex = _sprite.ZIndex - 1,
+		};
+		parent.AddChild(echo);
+		echo.GlobalTransform = _sprite.GlobalTransform;
+
+		Tween fade = echo.CreateTween();
+		fade.TweenProperty(echo, "modulate:a", 0.0f, DashEchoFadeSeconds);
+		fade.TweenCallback(Callable.From(() => echo.QueueFree()));
+	}
+
+	private void UpdateStamina(float delta)
+	{
+		if (_dashTimeRemaining > 0.0f || _dashInputBufferRemaining > 0.0f)
+		{
+			return;
+		}
+
+		if (_stamina < 1.0f)
+		{
+			SetStamina(_stamina + delta / StaminaRecoveryDurationSeconds);
+		}
+	}
+
+	private void SetStamina(float value)
+	{
+		float stamina = Mathf.Clamp(value, 0.0f, 1.0f);
+		if (Mathf.IsEqualApprox(_stamina, stamina))
+		{
+			return;
+		}
+
+		_stamina = stamina;
+		EmitSignal(SignalName.StaminaChanged, _stamina);
+	}
+
+	private void UpdateMovementAnimation(Vector2 direction)
+	{
 		if (Mathf.Abs(direction.X) > Mathf.Abs(direction.Y))
 		{
 			_facing = direction.X > 0.0f ? "right" : "left";
 		}
-		else
+		else if (direction != Vector2.Zero)
 		{
 			_facing = direction.Y > 0.0f ? "down" : "up";
 		}
