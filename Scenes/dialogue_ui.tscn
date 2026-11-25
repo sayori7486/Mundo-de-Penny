@@ -1,25 +1,27 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cytdhaunukmrv"]
 
-[ext_resource type="Script" path="res://Scripts/DialogueController.cs" id="1_dialogue"]
+[ext_resource type="Script" uid="uid://bansvm1qrrsjg" path="res://Scripts/DialogueController.cs" id="1_dialogue"]
+[ext_resource type="Texture2D" uid="uid://mmmjvxl2x47y" path="res://Sprites/Penny/Portrait.png" id="2_gsrxu"]
+[ext_resource type="FontFile" uid="uid://b3cuwt278574n" path="res://Fonts/AlteHaasGroteskRegular.ttf" id="3_3gjcu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialogue"]
-bg_color = Color(0.035, 0.04, 0.065, 0.94)
-border_color = Color(0.42, 0.31, 0.54, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
 content_margin_left = 6.0
 content_margin_top = 4.0
 content_margin_right = 6.0
 content_margin_bottom = 4.0
+bg_color = Color(0.035, 0.04, 0.065, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.42, 0.31, 0.54, 1)
 
-[node name="DialogueUI" type="CanvasLayer"]
+[node name="DialogueUI" type="CanvasLayer" unique_id=1126982929]
 layer = 5
 script = ExtResource("1_dialogue")
 
-[node name="DialoguePanel" type="PanelContainer" parent="."]
-visible = false
+[node name="DialoguePanel" type="PanelContainer" parent="." unique_id=1626144439]
+anchors_preset = -1
 anchor_left = 0.04
 anchor_top = 0.68
 anchor_right = 0.96
@@ -27,14 +29,21 @@ anchor_bottom = 0.96
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dialogue")
 
-[node name="Content" type="HBoxContainer" parent="DialoguePanel"]
+[node name="Content" type="HBoxContainer" parent="DialoguePanel" unique_id=956388863]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="Portrait" type="TextureRect" parent="DialoguePanel/Content"]
+[node name="Portrait" type="TextureRect" parent="DialoguePanel/Content" unique_id=710133913]
 custom_minimum_size = Vector2(36, 40)
 layout_mode = 2
+texture = ExtResource("2_gsrxu")
 
-[node name="Text" type="Label" parent="DialoguePanel/Content"]
+[node name="Text" type="RichTextLabel" parent="DialoguePanel/Content" unique_id=625133822]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("3_3gjcu")
+theme_override_fonts/bold_font = ExtResource("3_3gjcu")
+theme_override_fonts/bold_italics_font = ExtResource("3_3gjcu")
+theme_override_fonts/italics_font = ExtResource("3_3gjcu")
+theme_override_fonts/mono_font = ExtResource("3_3gjcu")
+tab_size = 6

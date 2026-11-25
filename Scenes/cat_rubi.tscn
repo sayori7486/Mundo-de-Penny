@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c82cv31boieq5" path="res://Sprites/Cats/Rubi/rubens-frame-1.png" id="2_0yue4"]
 [ext_resource type="Texture2D" uid="uid://dvp4p3iy605bc" path="res://Sprites/Cats/Rubi/rubens-frame-2.png" id="3_qk1my"]
 [ext_resource type="Texture2D" uid="uid://dmc6blskoh4ye" path="res://Sprites/Cats/Rubi/rubens-frame-3.png" id="4_r6av6"]
+[ext_resource type="Script" uid="uid://di6daprrb4tm1" path="res://Scripts/CatFollower.cs" id="5_cat_follower"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_26enl"]
 atlas = ExtResource("1_viq3k")
@@ -192,10 +193,12 @@ animations = [{
 size = Vector2(9.875, 8.5)
 
 [node name="Cat_rubi" type="CharacterBody2D" unique_id=772397094]
+script = ExtResource("5_cat_follower")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2079517303]
 sprite_frames = SubResource("SpriteFrames_mkerq")
-animation = &"idle_up"
+animation = &"walk_left"
+frame_progress = 0.37195164
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1956400292]
 position = Vector2(-0.9375, 4)

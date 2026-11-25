@@ -8,17 +8,56 @@
 [ext_resource type="PackedScene" uid="uid://gre1yqsgs4fh" path="res://Scenes/player.tscn" id="4_8c3xh"]
 [ext_resource type="Script" uid="uid://bap6dlhby013p" path="res://Scripts/DialogueLine.cs" id="6_omx0w"]
 [ext_resource type="Texture2D" uid="uid://d385xg2bxdntn" path="res://Sprites/Etc/water fountain.png" id="7_8c3xh"]
+[ext_resource type="Texture2D" uid="uid://mmmjvxl2x47y" path="res://Sprites/Penny/Portrait.png" id="7_y6wel"]
 [ext_resource type="Texture2D" uid="uid://o22cpya4of0" path="res://Sprites/Etc/tree1.png" id="8_wh1al"]
 [ext_resource type="PackedScene" path="res://Scenes/scene_fade_in.tscn" id="9_fade_in"]
-[ext_resource type="PackedScene" path="res://Scenes/dialogue_ui.tscn" id="10_dialogue"]
+[ext_resource type="PackedScene" uid="uid://cytdhaunukmrv" path="res://Scenes/dialogue_ui.tscn" id="10_dialogue"]
 [ext_resource type="PackedScene" uid="uid://dxhie6lhfi6ts" path="res://Scenes/cat_rubi.tscn" id="12_y6wel"]
 
-[sub_resource type="Resource" id="Resource_tno2k"]
+[sub_resource type="Resource" id="Resource_r20i3"]
 script = ExtResource("6_omx0w")
-Text = "oi"
+Text = "[b]Mr. Pickles:[/b] Penny! Você voltou!"
 metadata/_custom_type_script = "uid://bap6dlhby013p"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mqpsb"]
+[sub_resource type="Resource" id="Resource_y6wel"]
+script = ExtResource("6_omx0w")
+Text = "[b]Penny:[/b] O que aconteceu aqui?"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_gsrxu"]
+script = ExtResource("6_omx0w")
+Text = "[b]Mr. Pickles:[/b] Essas criaturas estranhas estão aparecendo por todo o reino, não estamos conseguindo detê-los sozinhos."
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_ethgc"]
+script = ExtResource("6_omx0w")
+Text = "[b]Mr. Pickles:[/b] O cajado se quebrou! Precisamos da sua ajuda!"
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_xl4hb"]
+script = ExtResource("6_omx0w")
+Text = "[b]Penny:[/b] Como consertamos ele?"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_01l7h"]
+script = ExtResource("6_omx0w")
+Text = "[b]Mr. Pickles:[/b] Reúna as estrelas espalhadas pelo reino. Com algumas delas conseguimos repara-lo."
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_84eoy"]
+script = ExtResource("6_omx0w")
+Text = "[b]Mr. Pickles:[/b] Assim, conseguimos eliminar todas as imperfeições do nosso mundo!"
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_coevy"]
+script = ExtResource("6_omx0w")
+Text = "[b]Penny:[/b] Entendido! É o certo a se fazer!"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6wel"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
@@ -26,7 +65,7 @@ region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o28pm"]
 size = Vector2(13, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l7a3p"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqpsb"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(0.63277245, 33.96223, 14.139489, 14.11076)
@@ -34,7 +73,7 @@ region = Rect2(0.63277245, 33.96223, 14.139489, 14.11076)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t63xj"]
 size = Vector2(13, 12.5)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1uw6u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7a3p"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(0.53651094, 49.879913, 14.007359, 13.707787)
@@ -42,7 +81,7 @@ region = Rect2(0.53651094, 49.879913, 14.007359, 13.707787)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7wex4"]
 size = Vector2(13, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r20i3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1uw6u"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(16.632462, 49.610413, 13.673517, 14.676971)
@@ -50,7 +89,7 @@ region = Rect2(16.632462, 49.610413, 13.673517, 14.676971)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y5x7m"]
 size = Vector2(13, 12.5)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e2imq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r20i3"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(16.392616, 34.214725, 14.078295, 13.796299)
@@ -67,7 +106,6 @@ size = Vector2(1286, 41.5)
 [node name="Outside" type="Node2D" unique_id=477998527]
 
 [node name="SceneFadeIn" parent="." unique_id=709661739 instance=ExtResource("9_fade_in")]
-visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=40900465]
 texture = ExtResource("1_slk23")
@@ -80,17 +118,19 @@ script = ExtResource("3_8c3xh")
 ObjectiveText = "Explore a área externa"
 
 [node name="DialogueUI" parent="." unique_id=937754200 instance=ExtResource("10_dialogue")]
-Lines = Array[ExtResource("6_omx0w")]([SubResource("Resource_tno2k")])
+Lines = Array[ExtResource("6_omx0w")]([SubResource("Resource_r20i3"), SubResource("Resource_y6wel"), SubResource("Resource_gsrxu"), SubResource("Resource_ethgc"), SubResource("Resource_xl4hb"), SubResource("Resource_01l7h"), SubResource("Resource_84eoy"), SubResource("Resource_coevy")])
+PlayerPortrait = ExtResource("7_y6wel")
+CharactersPerSecond = 12.0
 
 [node name="Actors" type="Node2D" parent="." unique_id=1542634607]
 y_sort_enabled = true
 
 [node name="Collectible" parent="Actors" unique_id=238363746 instance=ExtResource("2_hhqqv")]
 position = Vector2(283, 316)
-ItemTexture = SubResource("AtlasTexture_mqpsb")
+ItemTexture = SubResource("AtlasTexture_y6wel")
 
 [node name="Sprite2D" parent="Actors/Collectible" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_mqpsb")
+texture = SubResource("AtlasTexture_y6wel")
 
 [node name="CollisionShape2D" parent="Actors/Collectible" index="1" unique_id=1149369530]
 position = Vector2(0.5, 0)
@@ -98,10 +138,10 @@ shape = SubResource("RectangleShape2D_o28pm")
 
 [node name="Collectible2" parent="Actors" unique_id=914669277 instance=ExtResource("2_hhqqv")]
 position = Vector2(372, -212)
-ItemTexture = SubResource("AtlasTexture_l7a3p")
+ItemTexture = SubResource("AtlasTexture_mqpsb")
 
 [node name="Sprite2D" parent="Actors/Collectible2" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_l7a3p")
+texture = SubResource("AtlasTexture_mqpsb")
 
 [node name="CollisionShape2D" parent="Actors/Collectible2" index="1" unique_id=1149369530]
 position = Vector2(-0.5, -0.25)
@@ -109,10 +149,10 @@ shape = SubResource("RectangleShape2D_t63xj")
 
 [node name="Collectible3" parent="Actors" unique_id=786469739 instance=ExtResource("2_hhqqv")]
 position = Vector2(-364, -142)
-ItemTexture = SubResource("AtlasTexture_1uw6u")
+ItemTexture = SubResource("AtlasTexture_l7a3p")
 
 [node name="Sprite2D" parent="Actors/Collectible3" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_1uw6u")
+texture = SubResource("AtlasTexture_l7a3p")
 
 [node name="CollisionShape2D" parent="Actors/Collectible3" index="1" unique_id=1149369530]
 position = Vector2(-0.5, 1)
@@ -120,10 +160,10 @@ shape = SubResource("RectangleShape2D_7wex4")
 
 [node name="Collectible4" parent="Actors" unique_id=1604623177 instance=ExtResource("2_hhqqv")]
 position = Vector2(-361, 280)
-ItemTexture = SubResource("AtlasTexture_r20i3")
+ItemTexture = SubResource("AtlasTexture_1uw6u")
 
 [node name="Sprite2D" parent="Actors/Collectible4" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_r20i3")
+texture = SubResource("AtlasTexture_1uw6u")
 
 [node name="CollisionShape2D" parent="Actors/Collectible4" index="1" unique_id=1149369530]
 position = Vector2(0.5, -0.25)
@@ -131,10 +171,10 @@ shape = SubResource("RectangleShape2D_y5x7m")
 
 [node name="Collectible5" parent="Actors" unique_id=1989320415 instance=ExtResource("2_hhqqv")]
 position = Vector2(-1, -249)
-ItemTexture = SubResource("AtlasTexture_e2imq")
+ItemTexture = SubResource("AtlasTexture_r20i3")
 
 [node name="Sprite2D" parent="Actors/Collectible5" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_e2imq")
+texture = SubResource("AtlasTexture_r20i3")
 
 [node name="CollisionShape2D" parent="Actors/Collectible5" index="1" unique_id=1149369530]
 position = Vector2(0, 0.25)
@@ -142,6 +182,7 @@ shape = SubResource("RectangleShape2D_jk7mt")
 
 [node name="Player" parent="Actors" unique_id=310777521 instance=ExtResource("4_8c3xh")]
 position = Vector2(-1, 205)
+Speed = 110.0
 FollowPlayer = true
 CameraLimits = Rect2(-576, -448, 1152, 896)
 
@@ -232,6 +273,10 @@ texture = ExtResource("8_wh1al")
 [node name="arvore21" type="Sprite2D" parent="Actors" unique_id=1015418613]
 position = Vector2(492, -87)
 texture = ExtResource("8_wh1al")
+
+[node name="Cat_rubi" parent="Actors" unique_id=772397094 instance=ExtResource("12_y6wel")]
+position = Vector2(1, 213)
+FollowSpeed = 110.0
 
 [node name="Collisions" type="Node2D" parent="." unique_id=1232067504]
 
@@ -394,9 +439,6 @@ position = Vector2(239, 112)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore18" unique_id=962753487]
 polygon = PackedVector2Array(-90, -162, -90, -161, -91, -160, -93, -158, -103, -158, -103, -157, -107, -157, -108, -158, -112, -159, -113, -160, -113, -162, -111, -164, -110, -167, -110, -170, -120, -191, -81, -191, -93, -171, -94, -170, -94, -165, -93, -165, -92, -163)
-
-[node name="Cat_rubi" parent="." unique_id=772397094 instance=ExtResource("12_y6wel")]
-position = Vector2(1, 213)
 
 [editable path="Actors/Collectible"]
 [editable path="Actors/Collectible2"]
