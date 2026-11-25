@@ -2,8 +2,23 @@ using Godot;
 
 public partial class Player : CharacterBody2D
 {
+	public enum MovementAnimationSet
+	{
+		Walk,
+		Staff
+	}
+
 	[Export]
 	public float Speed { get; set; } = 120.0f;
+
+	[Export]
+	public MovementAnimationSet AnimationSet { get; set; } = MovementAnimationSet.Walk;
+
+	[Export]
+	public PackedScene ProjectileScene { get; set; } = null!;
+
+	[Export(PropertyHint.Range, "0,4,1")]
+	public int ProjectileLaunchFrame { get; set; } = 3;
 
 	[Export]
 	public bool FollowPlayer { get; set; } = false;
@@ -14,6 +29,8 @@ public partial class Player : CharacterBody2D
 	private AnimatedSprite2D _sprite = null!;
 	private Camera2D _camera = null!;
 	private string _facing = "down";
+	private bool _isAttacking;
+	private bool _projectileSpawned;
 
 	public override void _EnterTree()
 	{
@@ -25,8 +42,24 @@ public partial class Player : CharacterBody2D
 		_sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_camera = GetNodeOrNull<Camera2D>("Camera2D");
 		ConfigureCamera();
-		BuildAnimations();
-		PlayAnimation("idle_down");
+
+		if (_sprite.SpriteFrames == null)
+		{
+			GD.PushError("Player AnimatedSprite2D has no SpriteFrames resource.");
+			return;
+		}
+
+		foreach (string direction in new[] { "down", "left", "right", "up" })
+		{
+			_sprite.SpriteFrames.SetAnimationLoopMode(
+				$"attack_{direction}",
+				SpriteFrames.LoopMode.None
+			);
+		}
+
+		_sprite.AnimationFinished += OnAnimationFinished;
+		_sprite.FrameChanged += OnAttackFrameChanged;
+		PlayAnimation(GetIdleAnimationName());
 	}
 
 	private void ConfigureCamera()
@@ -50,6 +83,20 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (AnimationSet == MovementAnimationSet.Staff
+			&& !_isAttacking
+			&& Input.IsActionJustPressed("attack"))
+		{
+			StartAttack();
+		}
+
+		if (_isAttacking)
+		{
+			Velocity = Vector2.Zero;
+			MoveAndSlide();
+			return;
+		}
+
 		Vector2 direction = new(
 			Input.GetAxis("move_left", "move_right"),
 			Input.GetAxis("move_up", "move_down")
@@ -65,7 +112,7 @@ public partial class Player : CharacterBody2D
 
 		if (direction == Vector2.Zero)
 		{
-			PlayAnimation($"idle_{_facing}");
+			PlayAnimation(GetIdleAnimationName());
 			return;
 		}
 
@@ -78,7 +125,82 @@ public partial class Player : CharacterBody2D
 			_facing = direction.Y > 0.0f ? "down" : "up";
 		}
 
-		PlayAnimation($"walk_{_facing}");
+		string animationPrefix = AnimationSet == MovementAnimationSet.Staff ? "staff" : "walk";
+		PlayAnimation($"{animationPrefix}_{_facing}");
+	}
+
+	private void StartAttack()
+	{
+		string animationName = $"attack_{_facing}";
+		if (!_sprite.SpriteFrames.HasAnimation(animationName))
+		{
+			GD.PushError($"Player is missing the '{animationName}' animation.");
+			return;
+		}
+
+		_isAttacking = true;
+		_projectileSpawned = false;
+		_sprite.Play(animationName);
+	}
+
+	private void OnAttackFrameChanged()
+	{
+		if (!_isAttacking || _projectileSpawned || _sprite.Frame != ProjectileLaunchFrame)
+		{
+			return;
+		}
+
+		_projectileSpawned = true;
+		SpawnProjectile();
+	}
+
+	private void OnAnimationFinished()
+	{
+		if (!_isAttacking)
+		{
+			return;
+		}
+
+		_isAttacking = false;
+		PlayAnimation(GetIdleAnimationName());
+	}
+
+	private void SpawnProjectile()
+	{
+		if (ProjectileScene == null)
+		{
+			GD.PushError("Player has no ProjectileScene assigned.");
+			return;
+		}
+
+		Node parent = GetParent();
+		if (parent == null)
+		{
+			GD.PushError("Player cannot spawn a projectile without a parent node.");
+			return;
+		}
+
+		Vector2 direction = _facing switch
+		{
+			"up" => Vector2.Up,
+			"left" => Vector2.Left,
+			"right" => Vector2.Right,
+			_ => Vector2.Down,
+		};
+
+		Projectile projectile = ProjectileScene.Instantiate<Projectile>();
+		projectile.Direction = direction;
+		parent.AddChild(projectile);
+		projectile.GlobalPosition = GlobalPosition + new Vector2(0.0f, -8.0f)
+			+ direction * 12.0f;
+	}
+
+	private string GetIdleAnimationName()
+	{
+		string animationPrefix = AnimationSet == MovementAnimationSet.Staff
+			? "staff_idle"
+			: "idle";
+		return $"{animationPrefix}_{_facing}";
 	}
 
 	private void PlayAnimation(string animationName)
@@ -97,50 +219,4 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-	private void BuildAnimations()
-	{
-		SpriteFrames frames = new();
-		string[] directions = ["down", "right", "left", "up"];
-		string[] walkFiles =
-		[
-			"res://Sprites/Penny/Walk/penny-walk-frame-0.png",
-			"res://Sprites/Penny/Walk/penny-walk-frame-1.png",
-			"res://Sprites/Penny/Walk/penny-walk-frame-2.png",
-			"res://Sprites/Penny/Walk/penny-walk-frame-3.png",
-		];
-
-		for (int directionIndex = 0; directionIndex < directions.Length; directionIndex++)
-		{
-			string direction = directions[directionIndex];
-
-			frames.AddAnimation($"idle_{direction}");
-			frames.SetAnimationSpeed($"idle_{direction}", 1.0f);
-			frames.AddFrame(
-				$"idle_{direction}",
-				CreateDirectionTexture(walkFiles[0], directionIndex)
-			);
-
-			string walkAnimation = $"walk_{direction}";
-			frames.AddAnimation(walkAnimation);
-			frames.SetAnimationSpeed(walkAnimation, 8.0f);
-
-			foreach (string filePath in walkFiles)
-			{
-				frames.AddFrame(walkAnimation, CreateDirectionTexture(filePath, directionIndex));
-			}
-		}
-
-		_sprite.SpriteFrames = frames;
-	}
-
-	private static AtlasTexture CreateDirectionTexture(string filePath, int directionIndex)
-	{
-		Texture2D texture = GD.Load<Texture2D>(filePath);
-
-		return new AtlasTexture
-		{
-			Atlas = texture,
-			Region = new Rect2(directionIndex * 24, 0, 24, 32),
-		};
-	}
 }

@@ -12,7 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://o22cpya4of0" path="res://Sprites/Etc/tree1.png" id="8_wh1al"]
 [ext_resource type="PackedScene" path="res://Scenes/scene_fade_in.tscn" id="9_fade_in"]
 [ext_resource type="PackedScene" uid="uid://cytdhaunukmrv" path="res://Scenes/dialogue_ui.tscn" id="10_dialogue"]
+[ext_resource type="PackedScene" uid="uid://b6wh22c1mtwo" path="res://Scenes/health_hud.tscn" id="11_health_hud"]
 [ext_resource type="PackedScene" uid="uid://dxhie6lhfi6ts" path="res://Scenes/cat_rubi.tscn" id="12_y6wel"]
+[ext_resource type="PackedScene" uid="uid://spv4a2ltn080" path="res://Scenes/slime.tscn" id="13_l7a3p"]
+[ext_resource type="Script" uid="uid://cfm6cnyrg7fxw" path="res://Scripts/OutsideController.cs" id="14_outside_controller"]
 
 [sub_resource type="Resource" id="Resource_r20i3"]
 script = ExtResource("6_omx0w")
@@ -57,7 +60,7 @@ Text = "[b]Penny:[/b] Entendido! É o certo a se fazer!"
 IsPlayer = true
 metadata/_custom_type_script = "uid://bap6dlhby013p"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y6wel"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1uw6u"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
@@ -65,7 +68,7 @@ region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o28pm"]
 size = Vector2(13, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mqpsb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r20i3"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(0.63277245, 33.96223, 14.139489, 14.11076)
@@ -73,7 +76,7 @@ region = Rect2(0.63277245, 33.96223, 14.139489, 14.11076)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t63xj"]
 size = Vector2(13, 12.5)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l7a3p"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2imq"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(0.53651094, 49.879913, 14.007359, 13.707787)
@@ -81,7 +84,7 @@ region = Rect2(0.53651094, 49.879913, 14.007359, 13.707787)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7wex4"]
 size = Vector2(13, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1uw6u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjyhx"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(16.632462, 49.610413, 13.673517, 14.676971)
@@ -89,7 +92,7 @@ region = Rect2(16.632462, 49.610413, 13.673517, 14.676971)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y5x7m"]
 size = Vector2(13, 12.5)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r20i3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_684ki"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(16.392616, 34.214725, 14.078295, 13.796299)
@@ -104,6 +107,7 @@ size = Vector2(69.5, 897)
 size = Vector2(1286, 41.5)
 
 [node name="Outside" type="Node2D" unique_id=477998527]
+script = ExtResource("14_outside_controller")
 
 [node name="SceneFadeIn" parent="." unique_id=709661739 instance=ExtResource("9_fade_in")]
 
@@ -115,7 +119,7 @@ script = ExtResource("2_mf7ev")
 
 [node name="InventoryHUD" type="CanvasLayer" parent="." unique_id=518303758]
 script = ExtResource("3_8c3xh")
-ObjectiveText = "Explore a área externa"
+ObjectiveText = "Derrote as criaturas e Colete as flores "
 
 [node name="DialogueUI" parent="." unique_id=937754200 instance=ExtResource("10_dialogue")]
 Lines = Array[ExtResource("6_omx0w")]([SubResource("Resource_r20i3"), SubResource("Resource_y6wel"), SubResource("Resource_gsrxu"), SubResource("Resource_ethgc"), SubResource("Resource_xl4hb"), SubResource("Resource_01l7h"), SubResource("Resource_84eoy"), SubResource("Resource_coevy")])
@@ -127,10 +131,10 @@ y_sort_enabled = true
 
 [node name="Collectible" parent="Actors" unique_id=238363746 instance=ExtResource("2_hhqqv")]
 position = Vector2(283, 316)
-ItemTexture = SubResource("AtlasTexture_y6wel")
+ItemTexture = SubResource("AtlasTexture_1uw6u")
 
 [node name="Sprite2D" parent="Actors/Collectible" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_y6wel")
+texture = SubResource("AtlasTexture_1uw6u")
 
 [node name="CollisionShape2D" parent="Actors/Collectible" index="1" unique_id=1149369530]
 position = Vector2(0.5, 0)
@@ -138,10 +142,10 @@ shape = SubResource("RectangleShape2D_o28pm")
 
 [node name="Collectible2" parent="Actors" unique_id=914669277 instance=ExtResource("2_hhqqv")]
 position = Vector2(372, -212)
-ItemTexture = SubResource("AtlasTexture_mqpsb")
+ItemTexture = SubResource("AtlasTexture_r20i3")
 
 [node name="Sprite2D" parent="Actors/Collectible2" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_mqpsb")
+texture = SubResource("AtlasTexture_r20i3")
 
 [node name="CollisionShape2D" parent="Actors/Collectible2" index="1" unique_id=1149369530]
 position = Vector2(-0.5, -0.25)
@@ -149,10 +153,10 @@ shape = SubResource("RectangleShape2D_t63xj")
 
 [node name="Collectible3" parent="Actors" unique_id=786469739 instance=ExtResource("2_hhqqv")]
 position = Vector2(-364, -142)
-ItemTexture = SubResource("AtlasTexture_l7a3p")
+ItemTexture = SubResource("AtlasTexture_e2imq")
 
 [node name="Sprite2D" parent="Actors/Collectible3" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_l7a3p")
+texture = SubResource("AtlasTexture_e2imq")
 
 [node name="CollisionShape2D" parent="Actors/Collectible3" index="1" unique_id=1149369530]
 position = Vector2(-0.5, 1)
@@ -160,10 +164,10 @@ shape = SubResource("RectangleShape2D_7wex4")
 
 [node name="Collectible4" parent="Actors" unique_id=1604623177 instance=ExtResource("2_hhqqv")]
 position = Vector2(-361, 280)
-ItemTexture = SubResource("AtlasTexture_1uw6u")
+ItemTexture = SubResource("AtlasTexture_sjyhx")
 
 [node name="Sprite2D" parent="Actors/Collectible4" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_1uw6u")
+texture = SubResource("AtlasTexture_sjyhx")
 
 [node name="CollisionShape2D" parent="Actors/Collectible4" index="1" unique_id=1149369530]
 position = Vector2(0.5, -0.25)
@@ -171,10 +175,10 @@ shape = SubResource("RectangleShape2D_y5x7m")
 
 [node name="Collectible5" parent="Actors" unique_id=1989320415 instance=ExtResource("2_hhqqv")]
 position = Vector2(-1, -249)
-ItemTexture = SubResource("AtlasTexture_r20i3")
+ItemTexture = SubResource("AtlasTexture_684ki")
 
 [node name="Sprite2D" parent="Actors/Collectible5" index="0" unique_id=1593577144]
-texture = SubResource("AtlasTexture_r20i3")
+texture = SubResource("AtlasTexture_684ki")
 
 [node name="CollisionShape2D" parent="Actors/Collectible5" index="1" unique_id=1149369530]
 position = Vector2(0, 0.25)
@@ -183,6 +187,7 @@ shape = SubResource("RectangleShape2D_jk7mt")
 [node name="Player" parent="Actors" unique_id=310777521 instance=ExtResource("4_8c3xh")]
 position = Vector2(-1, 205)
 Speed = 110.0
+AnimationSet = 1
 FollowPlayer = true
 CameraLimits = Rect2(-576, -448, 1152, 896)
 
@@ -274,9 +279,28 @@ texture = ExtResource("8_wh1al")
 position = Vector2(492, -87)
 texture = ExtResource("8_wh1al")
 
+[node name="Slime" parent="Actors" unique_id=413196780 instance=ExtResource("13_l7a3p")]
+position = Vector2(194, 5)
+
+[node name="Slime2" parent="Actors" unique_id=1581835648 instance=ExtResource("13_l7a3p")]
+position = Vector2(-261, 23)
+
+[node name="Slime3" parent="Actors" unique_id=126210573 instance=ExtResource("13_l7a3p")]
+position = Vector2(-234, -188)
+
+[node name="Slime4" parent="Actors" unique_id=1074238262 instance=ExtResource("13_l7a3p")]
+position = Vector2(348, -151)
+MoveSpeed = 70.0
+AttackRange = 30.0
+
+[node name="Slime5" parent="Actors" unique_id=883815602 instance=ExtResource("13_l7a3p")]
+position = Vector2(-276, 328)
+
 [node name="Cat_rubi" parent="Actors" unique_id=772397094 instance=ExtResource("12_y6wel")]
 position = Vector2(1, 213)
 FollowSpeed = 110.0
+
+[node name="HealthHUD" parent="." unique_id=1109567757 instance=ExtResource("11_health_hud")]
 
 [node name="Collisions" type="Node2D" parent="." unique_id=1232067504]
 

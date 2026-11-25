@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://cewdhr7ebievb"]
+
+[ext_resource type="Script" uid="uid://c6rdkurcyyor7" path="res://Scripts/Projectile.cs" id="1_projectile"]
+[ext_resource type="Texture2D" uid="uid://b5onp3q5uir0e" path="res://Sprites/Projectile/projetil-frame-0.png" id="2_frame_0"]
+[ext_resource type="Texture2D" uid="uid://cv3mtrjtmg21s" path="res://Sprites/Projectile/projetil-frame-1.png" id="3_frame_1"]
+[ext_resource type="Texture2D" uid="uid://cptcebcit0ukf" path="res://Sprites/Projectile/projetil-frame-2.png" id="4_frame_2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_projectile"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_frame_0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_frame_1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_frame_2")
+}],
+"loop": 1,
+"name": &"travel",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_projectile"]
+radius = 4.0
+
+[node name="Projectile" type="Area2D" unique_id=1416694424]
+collision_layer = 0
+script = ExtResource("1_projectile")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=871164643]
+sprite_frames = SubResource("SpriteFrames_projectile")
+animation = &"travel"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1434239659]
+position = Vector2(-1, -4)
+shape = SubResource("CircleShape2D_projectile")

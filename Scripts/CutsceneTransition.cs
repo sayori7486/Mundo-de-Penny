@@ -42,11 +42,15 @@ public partial class CutsceneTransition : CanvasLayer
 
 	private async void FadeToCutscene()
 	{
+		MusicManager music = GetNode<MusicManager>("/root/MusicManager");
+		var musicFade = music.FadeOut(1.0f);
+
 		Tween tween = CreateTween();
 		tween.TweenProperty(_fade, "color:a", 1.0f, 1.0f)
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.InOut);
 		await ToSignal(tween, Tween.SignalName.Finished);
+		await musicFade;
 
 		Error error = GetTree().ChangeSceneToFile(CutscenePath);
 		if (error != Error.Ok)

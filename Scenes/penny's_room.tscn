@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dwx7880wafbls" path="res://Sprites/Etc/itens.png" id="7_items"]
 [ext_resource type="Script" uid="uid://02jqcosttmk5" path="res://Scripts/CutsceneTransition.cs" id="8_cutscene_transition"]
 [ext_resource type="PackedScene" path="res://Scenes/scene_fade_in.tscn" id="9_fade_in"]
+[ext_resource type="PackedScene" path="res://Scenes/health_hud.tscn" id="10_health_hud"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkerq"]
 size = Vector2(22.5, 200)
@@ -149,3 +150,5 @@ limit_left = 0
 limit_top = 0
 limit_right = 320
 limit_bottom = 256
+
+[node name="HealthHUD" parent="." instance=ExtResource("10_health_hud")]

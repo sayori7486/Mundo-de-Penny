@@ -7,6 +7,8 @@ public partial class Cutscene1 : Control
 
 	public override void _Ready()
 	{
+		GetNode<MusicManager>("/root/MusicManager").StopMusic();
+
 		_video = GetNode<VideoStreamPlayer>("AspectRatioContainer/Video");
 		_fade = GetNode<ColorRect>("FadeOverlay");
 		_video.TextureFilter = CanvasItem.TextureFilterEnum.Linear;

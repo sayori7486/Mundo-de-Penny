@@ -72,7 +72,9 @@ public partial class Collectible : StaticBody2D
 
 	public override void _Process(double delta)
 	{
-		if (_playerInRange && Input.IsActionJustPressed("interact"))
+		if (_playerInRange
+			&& _tracker.CollectionEnabled
+			&& Input.IsActionJustPressed("interact"))
 		{
 			_tracker.Collect(this);
 			QueueFree();

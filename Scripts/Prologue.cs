@@ -25,6 +25,8 @@ public partial class Prologue : Control
 
 	public override void _Ready()
 	{
+		GetNode<MusicManager>("/root/MusicManager").PlayDolldance();
+
 		if (Pages.Count == 0)
 		{
 			GD.PushError("Prologue requires at least one text page.");

@@ -14,10 +14,16 @@ public partial class CollectibleTracker : Node
 
 	public int Total => _total;
 	public int Remaining => _remaining.Count;
+	public bool CollectionEnabled { get; private set; } = true;
 
 	public override void _EnterTree()
 	{
 		AddToGroup("collectible_tracker");
+	}
+
+	public void SetCollectionEnabled(bool enabled)
+	{
+		CollectionEnabled = enabled;
 	}
 
 	public void Register(Collectible collectible)
@@ -30,7 +36,7 @@ public partial class CollectibleTracker : Node
 
 	public void Collect(Collectible collectible)
 	{
-		if (!_remaining.Remove(collectible))
+		if (!CollectionEnabled || !_remaining.Remove(collectible))
 		{
 			return;
 		}
