@@ -4,6 +4,9 @@ using Godot;
 public partial class DialogueLine : Resource
 {
 	[Export]
+	public string Speaker { get; set; } = "";
+
+	[Export]
 	public string Text { get; set; } = "";
 
 	[Export]

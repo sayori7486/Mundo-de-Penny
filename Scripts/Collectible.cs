@@ -42,6 +42,9 @@ public partial class Collectible : StaticBody2D
 		}
 	}
 
+	[Export(PropertyHint.MultilineText)]
+	public string TutorialText { get; set; } = "";
+
 	[Export]
 	public AtlasTexture SlowdownTexture { get; set; } = null!;
 

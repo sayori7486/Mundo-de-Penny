@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cjy3epfo3678i"]
 
 [ext_resource type="Script" uid="uid://bf8urclfaxbkw" path="res://Scripts/Prologue.cs" id="1_prologue"]
-[ext_resource type="FontFile" uid="uid://b3cuwt278574n" path="res://Fonts/AlteHaasGroteskRegular.ttf" id="2_font"]
+[ext_resource type="FontFile" uid="uid://ds76v10imqtlv" path="res://Fonts/pf_tempesta_seven.ttf" id="2_font"]
 
 [node name="Prologue" type="Control" unique_id=1378751907]
 layout_mode = 3

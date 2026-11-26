@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://bjs1n2wx0xi37" path="res://Scripts/InventoryHUD.cs" id="3_8c3xh"]
 [ext_resource type="Texture2D" uid="uid://dwx7880wafbls" path="res://Sprites/Etc/itens.png" id="3_mf7ev"]
 [ext_resource type="PackedScene" uid="uid://gre1yqsgs4fh" path="res://Scenes/player.tscn" id="4_8c3xh"]
-[ext_resource type="Script" uid="uid://bap6dlhby013p" path="res://Scripts/DialogueLine.cs" id="6_omx0w"]
+[ext_resource type="Resource" uid="uid://b2p452v8helgf" path="res://Scenes/outside_dialogue.tres" id="6_dialogue_data"]
 [ext_resource type="Texture2D" uid="uid://d385xg2bxdntn" path="res://Sprites/Etc/water fountain.png" id="7_8c3xh"]
 [ext_resource type="Texture2D" uid="uid://mmmjvxl2x47y" path="res://Sprites/Penny/Portrait.png" id="7_y6wel"]
 [ext_resource type="Texture2D" uid="uid://o22cpya4of0" path="res://Sprites/Etc/tree1.png" id="8_wh1al"]
@@ -17,89 +17,32 @@
 [ext_resource type="PackedScene" uid="uid://spv4a2ltn080" path="res://Scenes/slime.tscn" id="13_l7a3p"]
 [ext_resource type="Script" uid="uid://cfm6cnyrg7fxw" path="res://Scripts/OutsideController.cs" id="14_outside_controller"]
 [ext_resource type="PackedScene" path="res://Scenes/tree_leaves_overlay.tscn" id="15_tree_leaves"]
-
-[sub_resource type="Resource" id="Resource_r20i3"]
-script = ExtResource("6_omx0w")
-Text = "[b]Mr. Pickles:[/b] Penny! Você voltou!"
-metadata/_custom_type_script = "uid://bap6dlhby013p"
-
-[sub_resource type="Resource" id="Resource_y6wel"]
-script = ExtResource("6_omx0w")
-Text = "[b]Penny:[/b] O que aconteceu aqui?"
-IsPlayer = true
-metadata/_custom_type_script = "uid://bap6dlhby013p"
-
-[sub_resource type="Resource" id="Resource_gsrxu"]
-script = ExtResource("6_omx0w")
-Text = "[b]Mr. Pickles:[/b] Essas criaturas estranhas estão aparecendo por todo o reino, não estamos conseguindo detê-los sozinhos."
-metadata/_custom_type_script = "uid://bap6dlhby013p"
-
-[sub_resource type="Resource" id="Resource_ethgc"]
-script = ExtResource("6_omx0w")
-Text = "[b]Mr. Pickles:[/b] O cajado se quebrou! Precisamos da sua ajuda!"
-metadata/_custom_type_script = "uid://bap6dlhby013p"
-
-[sub_resource type="Resource" id="Resource_xl4hb"]
-script = ExtResource("6_omx0w")
-Text = "[b]Penny:[/b] Como consertamos ele?"
-IsPlayer = true
-metadata/_custom_type_script = "uid://bap6dlhby013p"
-
-[sub_resource type="Resource" id="Resource_01l7h"]
-script = ExtResource("6_omx0w")
-Text = "[b]Mr. Pickles:[/b] Reúna as estrelas espalhadas pelo reino. Com algumas delas conseguimos repara-lo."
-metadata/_custom_type_script = "uid://bap6dlhby013p"
-
-[sub_resource type="Resource" id="Resource_84eoy"]
-script = ExtResource("6_omx0w")
-Text = "[b]Mr. Pickles:[/b] Assim, conseguimos eliminar todas as imperfeições do nosso mundo!"
-metadata/_custom_type_script = "uid://bap6dlhby013p"
-
-[sub_resource type="Resource" id="Resource_coevy"]
-script = ExtResource("6_omx0w")
-Text = "[b]Penny:[/b] Entendido! É o certo a se fazer!"
-IsPlayer = true
-metadata/_custom_type_script = "uid://bap6dlhby013p"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r20i3"]
-resource_local_to_scene = true
-atlas = ExtResource("3_mf7ev")
-region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o28pm"]
-size = Vector2(13, 12)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e2imq"]
-resource_local_to_scene = true
-atlas = ExtResource("3_mf7ev")
-region = Rect2(0.63277245, 33.96223, 14.139489, 14.11076)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_t63xj"]
-size = Vector2(13, 12.5)
+[ext_resource type="Script" path="res://Scripts/ControlsTutorial.cs" id="16_controls_tutorial"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sjyhx"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(0.53651094, 49.879913, 14.007359, 13.707787)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7wex4"]
-size = Vector2(13, 12)
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2imq"]
+resource_local_to_scene = true
+atlas = ExtResource("3_mf7ev")
+region = Rect2(0.63277245, 33.96223, 14.139489, 14.11076)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_684ki"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(16.632462, 49.610413, 13.673517, 14.676971)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_y5x7m"]
-size = Vector2(13, 12.5)
+[sub_resource type="AtlasTexture" id="AtlasTexture_r20i3"]
+resource_local_to_scene = true
+atlas = ExtResource("3_mf7ev")
+region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ymkd4"]
 resource_local_to_scene = true
 atlas = ExtResource("3_mf7ev")
 region = Rect2(16.392616, 34.214725, 14.078295, 13.796299)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jk7mt"]
-size = Vector2(12, 13.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkerq"]
 size = Vector2(69.5, 897)
@@ -129,9 +72,19 @@ script = ExtResource("3_8c3xh")
 ObjectiveText = "Derrote as criaturas e Colete as flores "
 
 [node name="DialogueUI" parent="." unique_id=937754200 instance=ExtResource("10_dialogue")]
-Lines = Array[ExtResource("6_omx0w")]([SubResource("Resource_r20i3"), SubResource("Resource_y6wel"), SubResource("Resource_gsrxu"), SubResource("Resource_ethgc"), SubResource("Resource_xl4hb"), SubResource("Resource_01l7h"), SubResource("Resource_84eoy"), SubResource("Resource_coevy")])
+Dialogue = ExtResource("6_dialogue_data")
 PlayerPortrait = ExtResource("7_y6wel")
+PortraitPosition = Vector2(6, -10)
+PortraitScale = Vector2(0.01, 0.01)
+SpeakerFontSize = 6
+TextFontSize = 4
 CharactersPerSecond = 12.0
+
+[node name="ControlsTutorial" type="Node" parent="."]
+script = ExtResource("16_controls_tutorial")
+PlayerPath = NodePath("../Actors/Player")
+Hints = Array[String](["J - Atacar"])
+TriggerActions = Array[String](["attack"])
 
 [node name="Actors" type="Node2D" parent="." unique_id=1542634607]
 y_sort_enabled = true
@@ -445,9 +398,3 @@ position = Vector2(0, -308)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Porta" unique_id=1172533478]
 position = Vector2(-1, -7)
 shape = SubResource("CircleShape2D_mkerq")
-
-[editable path="Actors/Collectible"]
-[editable path="Actors/Collectible2"]
-[editable path="Actors/Collectible3"]
-[editable path="Actors/Collectible4"]
-[editable path="Actors/Collectible5"]

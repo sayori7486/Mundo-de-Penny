@@ -573,3 +573,4 @@ shape = SubResource("RectangleShape2D_hurtbox")
 script = ExtResource("6_health")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=644731861]
+enabled = false

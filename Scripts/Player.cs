@@ -7,8 +7,7 @@ public partial class Player : CharacterBody2D
 	private const float DashDurationSeconds = 0.15f;
 	private const float DashSpeedMultiplier = 3.0f;
 	private const float DashInputBufferSeconds = 0.2f;
-	private const float DashEchoIntervalSeconds = 0.04f;
-	private const float DashEchoFadeSeconds = 0.22f;
+	private const float StaminaRecoveryDelaySeconds = 5.0f;
 	private const float StaminaRecoveryDurationSeconds = 1.0f;
 
 	[Signal]
@@ -58,8 +57,9 @@ public partial class Player : CharacterBody2D
 	private float _stamina = 1.0f;
 	private float _dashTimeRemaining;
 	private float _dashInputBufferRemaining;
-	private float _dashEchoTimeRemaining;
+	private float _staminaRecoveryDelayRemaining;
 	private Vector2 _dashDirection;
+	private bool _isRecoveringStamina;
 	private bool _hasPermanentHealthEffect;
 	private bool _isAttacking;
 	private bool _projectileSpawned;
@@ -213,6 +213,8 @@ public partial class Player : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		float deltaSeconds = (float)delta;
+		UpdateStamina(deltaSeconds);
+
 		if (Input.IsActionJustPressed("dash"))
 		{
 			_dashInputBufferRemaining = DashInputBufferSeconds;
@@ -225,8 +227,6 @@ public partial class Player : CharacterBody2D
 			);
 		}
 
-		UpdateStamina(deltaSeconds);
-
 		if (_dashTimeRemaining > 0.0f)
 		{
 			MoveDuringDash(deltaSeconds);
@@ -236,7 +236,7 @@ public partial class Player : CharacterBody2D
 		Vector2 direction = GetMovementDirection();
 		if (!_isAttacking
 			&& _dashInputBufferRemaining > 0.0f
-			&& _stamina >= DashStaminaCost)
+			&& _stamina > 0.0f)
 		{
 			StartDash(direction);
 			MoveDuringDash(deltaSeconds);
@@ -306,8 +306,17 @@ public partial class Player : CharacterBody2D
 			: movementDirection;
 		_dashTimeRemaining = DashDurationSeconds;
 		_dashInputBufferRemaining = 0.0f;
-		_dashEchoTimeRemaining = 0.0f;
 		SetStamina(_stamina - DashStaminaCost);
+		if (_stamina <= 0.0f)
+		{
+			_isRecoveringStamina = true;
+			_staminaRecoveryDelayRemaining = StaminaRecoveryDelaySeconds;
+		}
+		else
+		{
+			_isRecoveringStamina = false;
+			_staminaRecoveryDelayRemaining = 0.0f;
+		}
 	}
 
 	private Vector2 GetFacingDirection()
@@ -324,13 +333,6 @@ public partial class Player : CharacterBody2D
 	private void MoveDuringDash(float delta)
 	{
 		_dashTimeRemaining = Mathf.Max(0.0f, _dashTimeRemaining - delta);
-		_dashEchoTimeRemaining -= delta;
-		if (_dashEchoTimeRemaining <= 0.0f)
-		{
-			SpawnDashEcho();
-			_dashEchoTimeRemaining = DashEchoIntervalSeconds;
-		}
-
 		Velocity = _dashDirection * Speed * GetSpeedMultiplier() * DashSpeedMultiplier;
 		MoveAndSlide();
 		UpdateMovementAnimation(_dashDirection);
@@ -341,60 +343,29 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-	private void SpawnDashEcho()
-	{
-		if (_sprite.SpriteFrames == null)
-		{
-			GD.PushError("Player cannot create a dash echo without SpriteFrames.");
-			return;
-		}
-
-		Texture2D frameTexture = _sprite.SpriteFrames.GetFrameTexture(
-			_sprite.Animation,
-			_sprite.Frame
-		);
-		if (frameTexture == null)
-		{
-			GD.PushError("Player cannot create a dash echo without a current animation frame.");
-			return;
-		}
-
-		Node parent = GetParent();
-		if (parent == null)
-		{
-			GD.PushError("Player cannot create a dash echo without a parent node.");
-			return;
-		}
-
-		var echo = new Sprite2D
-		{
-			Texture = frameTexture,
-			TextureFilter = _sprite.TextureFilter,
-			Centered = _sprite.Centered,
-			Offset = _sprite.Offset,
-			FlipH = _sprite.FlipH,
-			FlipV = _sprite.FlipV,
-			Modulate = _sprite.Modulate,
-			ZIndex = _sprite.ZIndex - 1,
-		};
-		parent.AddChild(echo);
-		echo.GlobalTransform = _sprite.GlobalTransform;
-
-		Tween fade = echo.CreateTween();
-		fade.TweenProperty(echo, "modulate:a", 0.0f, DashEchoFadeSeconds);
-		fade.TweenCallback(Callable.From(() => echo.QueueFree()));
-	}
-
 	private void UpdateStamina(float delta)
 	{
-		if (_dashTimeRemaining > 0.0f || _dashInputBufferRemaining > 0.0f)
+		if (_dashTimeRemaining > 0.0f)
 		{
 			return;
 		}
 
-		if (_stamina < 1.0f)
+		if (_isRecoveringStamina)
 		{
+			if (_staminaRecoveryDelayRemaining > 0.0f)
+			{
+				_staminaRecoveryDelayRemaining = Mathf.Max(
+					0.0f,
+					_staminaRecoveryDelayRemaining - delta
+				);
+				return;
+			}
+
 			SetStamina(_stamina + delta / StaminaRecoveryDurationSeconds);
+			if (_stamina >= 1.0f)
+			{
+				_isRecoveringStamina = false;
+			}
 		}
 	}
 

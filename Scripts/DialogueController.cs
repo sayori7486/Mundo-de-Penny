@@ -6,21 +6,38 @@ public partial class DialogueController : CanvasLayer
 	public delegate void DialogueFinishedEventHandler();
 
 	[Export]
-	public Godot.Collections.Array<DialogueLine> Lines { get; set; } = new();
+	public DialogueSequence Dialogue { get; set; } = null!;
 
 	[Export]
 	public Texture2D PlayerPortrait { get; set; } = null!;
+
+	[Export]
+	public Vector2 PortraitPosition { get; set; } = new(6.0f, 8.0f);
+
+	[Export]
+	public Vector2 PortraitScale { get; set; } = Vector2.One;
+
+	[Export(PropertyHint.Range, "1,64,1")]
+	public int SpeakerFontSize { get; set; } = 8;
+
+	[Export(PropertyHint.Range, "1,64,1")]
+	public int TextFontSize { get; set; } = 8;
 
 	[Export(PropertyHint.Range, "1,120,1")]
 	public float CharactersPerSecond { get; set; } = 30.0f;
 
 	private Control _panel = null!;
+	private TextureRect _box = null!;
 	private TextureRect _portrait = null!;
+	private Label _speaker = null!;
 	private RichTextLabel _text = null!;
+	private Godot.Collections.Array<DialogueLine> _lines = new();
 	private Tween _typingTween = null!;
 	private int _lineIndex;
 	private bool _isOpen;
 	private bool _isTyping;
+
+	public bool IsOpen => _isOpen;
 
 	public override void _EnterTree()
 	{
@@ -31,27 +48,43 @@ public partial class DialogueController : CanvasLayer
 	public override void _Ready()
 	{
 		_panel = GetNode<Control>("DialoguePanel");
-		_portrait = GetNode<TextureRect>("DialoguePanel/Content/Portrait");
-		_text = GetNode<RichTextLabel>("DialoguePanel/Content/Text");
+		_box = GetNode<TextureRect>("DialoguePanel/Box");
+		_portrait = GetNode<TextureRect>("DialoguePanel/Portrait");
+		_speaker = GetNode<Label>("DialoguePanel/Speaker");
+		_text = GetNode<RichTextLabel>("DialoguePanel/Text");
 
+		_box.TextureFilter = CanvasItem.TextureFilterEnum.Nearest;
+		_box.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
+		_box.StretchMode = TextureRect.StretchModeEnum.Keep;
 		_portrait.TextureFilter = CanvasItem.TextureFilterEnum.Nearest;
 		_portrait.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
 		_portrait.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
+		_portrait.Position = PortraitPosition;
+		_portrait.Scale = PortraitScale;
 		_text.BbcodeEnabled = true;
 		_text.AutowrapMode = TextServer.AutowrapMode.WordSmart;
 		_text.VerticalAlignment = VerticalAlignment.Top;
-		const int dialogueFontSize = 8;
-		_text.AddThemeFontSizeOverride("normal_font_size", dialogueFontSize);
-		_text.AddThemeFontSizeOverride("bold_font_size", dialogueFontSize);
-		_text.AddThemeFontSizeOverride("italics_font_size", dialogueFontSize);
-		_text.AddThemeFontSizeOverride("bold_italics_font_size", dialogueFontSize);
-		_text.AddThemeFontSizeOverride("mono_font_size", dialogueFontSize);
+		Font dialogueFont = _text.GetThemeFont("normal_font");
+		_text.AddThemeFontOverride("bold_font", dialogueFont);
+		_text.AddThemeFontOverride("italics_font", dialogueFont);
+		_text.AddThemeFontOverride("bold_italics_font", dialogueFont);
+		_text.AddThemeFontOverride("mono_font", dialogueFont);
+		_speaker.AddThemeFontSizeOverride("font_size", SpeakerFontSize);
+		Color dialogueTextColor = new(1.0f, 0.93f, 0.96f);
+		_speaker.AddThemeColorOverride("font_color", dialogueTextColor);
+		_text.AddThemeColorOverride("default_color", dialogueTextColor);
+		_text.AddThemeFontSizeOverride("normal_font_size", TextFontSize);
+		_text.AddThemeFontSizeOverride("bold_font_size", TextFontSize);
+		_text.AddThemeFontSizeOverride("italics_font_size", TextFontSize);
+		_text.AddThemeFontSizeOverride("bold_italics_font_size", TextFontSize);
+		_text.AddThemeFontSizeOverride("mono_font_size", TextFontSize);
 
 		_panel.Visible = false;
-		if (Lines.Count == 0)
+		if (Dialogue == null || Dialogue.Lines.Count == 0)
 		{
 			return;
 		}
+		_lines = Dialogue.Lines;
 
 		SceneFadeIn fadeIn = GetParent().GetNodeOrNull<SceneFadeIn>("SceneFadeIn");
 		if (fadeIn != null)
@@ -79,6 +112,32 @@ public partial class DialogueController : CanvasLayer
 		ShowCurrentLine();
 	}
 
+	public void ShowMessage(string speaker, string text, bool showPortrait = true)
+	{
+		if (_isOpen)
+		{
+			GD.PushError("Cannot show a new dialogue message while another one is open.");
+			return;
+		}
+
+		if (string.IsNullOrWhiteSpace(speaker) || string.IsNullOrWhiteSpace(text))
+		{
+			GD.PushError("Dialogue messages require a speaker and text.");
+			return;
+		}
+
+		DialogueLine line = new()
+		{
+			Speaker = speaker,
+			Text = text,
+			IsPlayer = showPortrait,
+		};
+		_lines = new Godot.Collections.Array<DialogueLine>();
+		_lines.Add(line);
+		_lineIndex = 0;
+		StartDialogue();
+	}
+
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (!_isOpen
@@ -102,7 +161,7 @@ public partial class DialogueController : CanvasLayer
 
 		_lineIndex++;
 
-		if (_lineIndex >= Lines.Count)
+		if (_lineIndex >= _lines.Count)
 		{
 			CloseDialogue();
 			return;
@@ -113,7 +172,7 @@ public partial class DialogueController : CanvasLayer
 
 	private void ShowCurrentLine()
 	{
-		DialogueLine line = Lines[_lineIndex];
+		DialogueLine line = _lines[_lineIndex];
 		if (line == null)
 		{
 			GD.PushError($"Dialogue line {_lineIndex + 1} is empty.");
@@ -121,6 +180,7 @@ public partial class DialogueController : CanvasLayer
 			return;
 		}
 
+		_speaker.Text = line.Speaker;
 		_text.Text = line.Text;
 		StartTyping();
 		_portrait.Texture = PlayerPortrait;

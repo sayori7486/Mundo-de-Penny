@@ -8,6 +8,8 @@ public partial class HealthHUD : CanvasLayer
 	private const int ScarfFrameHeight = 48;
 	private const int ScarfFramesPerRow = 4;
 	private const float ScarfFrameSpeed = 4.0f;
+	private const float FullStaminaThreshold = 0.75f;
+	private const float EmptyStaminaThreshold = 0.25f;
 
 	private AnimatedSprite2D _animatedHealth = null!;
 	private AnimatedSprite2D _lifeStage = null!;
@@ -15,6 +17,7 @@ public partial class HealthHUD : CanvasLayer
 	private Texture2D _originalStaminaSpriteTexture = null!;
 	private Texture2D _scarfNoColorTexture = null!;
 	private Rect2 _originalStaminaSpriteRegion;
+	private Vector2 _originalStaminaSpritePosition;
 	private Vector2 _originalStaminaSpriteScale;
 	private bool _originalStaminaSpriteRegionEnabled;
 	private bool _showingNoColorSprite;
@@ -31,6 +34,7 @@ public partial class HealthHUD : CanvasLayer
 		_staminaSprite.TextureFilter = CanvasItem.TextureFilterEnum.Nearest;
 		_originalStaminaSpriteTexture = _staminaSprite.Texture;
 		_originalStaminaSpriteRegion = _staminaSprite.RegionRect;
+		_originalStaminaSpritePosition = _staminaSprite.Position;
 		_originalStaminaSpriteScale = _staminaSprite.Scale;
 		_originalStaminaSpriteRegionEnabled = _staminaSprite.RegionEnabled;
 
@@ -113,9 +117,9 @@ public partial class HealthHUD : CanvasLayer
 
 	private void UpdateStamina(float currentStamina)
 	{
-		string animation = currentStamina >= 1.0f
+		string animation = currentStamina >= FullStaminaThreshold
 			? "full"
-			: currentStamina > 0.0f
+			: currentStamina > EmptyStaminaThreshold
 				? "medium"
 				: "empty";
 		if (_animatedHealth.Animation != animation)
@@ -133,7 +137,8 @@ public partial class HealthHUD : CanvasLayer
 		{
 			_staminaSprite.Texture = _scarfNoColorTexture;
 			_staminaSprite.RegionEnabled = false;
-			_staminaSprite.Scale = Vector2.One;
+			_staminaSprite.Scale = new Vector2(0.81f, 0.81f);
+			_staminaSprite.Position = _originalStaminaSpritePosition + Vector2.Left;
 		}
 		else
 		{
@@ -141,6 +146,7 @@ public partial class HealthHUD : CanvasLayer
 			_staminaSprite.RegionEnabled = _originalStaminaSpriteRegionEnabled;
 			_staminaSprite.RegionRect = _originalStaminaSpriteRegion;
 			_staminaSprite.Scale = _originalStaminaSpriteScale;
+			_staminaSprite.Position = _originalStaminaSpritePosition;
 		}
 
 		_showingNoColorSprite = showNoColorSprite;

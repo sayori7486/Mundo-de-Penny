@@ -37,7 +37,23 @@ public partial class CutsceneTransition : CanvasLayer
 			player.SetProcess(false);
 		}
 
+		if (GetTree().GetFirstNodeInGroup("dialogue_controller") is DialogueController dialogue
+			&& dialogue.IsOpen)
+		{
+			FadeToCutsceneAfterDialogue(dialogue);
+			return;
+		}
+
 		FadeToCutscene();
+	}
+
+	private async void FadeToCutsceneAfterDialogue(DialogueController dialogue)
+	{
+		await ToSignal(dialogue, DialogueController.SignalName.DialogueFinished);
+		if (IsInsideTree())
+		{
+			FadeToCutscene();
+		}
 	}
 
 	private async void FadeToCutscene()

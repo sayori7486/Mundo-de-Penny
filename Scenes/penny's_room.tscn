@@ -8,7 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://dwx7880wafbls" path="res://Sprites/Etc/itens.png" id="7_items"]
 [ext_resource type="Script" uid="uid://02jqcosttmk5" path="res://Scripts/CutsceneTransition.cs" id="8_cutscene_transition"]
 [ext_resource type="PackedScene" path="res://Scenes/scene_fade_in.tscn" id="9_fade_in"]
-[ext_resource type="PackedScene" path="res://Scenes/health_hud.tscn" id="10_health_hud"]
+[ext_resource type="PackedScene" uid="uid://b6wh22c1mtwo" path="res://Scenes/health_hud.tscn" id="10_health_hud"]
+[ext_resource type="Script" uid="uid://ceofmx2sf525r" path="res://Scripts/PennyRoomTutorial.cs" id="11_tutorial"]
+[ext_resource type="PackedScene" uid="uid://cytdhaunukmrv" path="res://Scenes/dialogue_ui.tscn" id="12_dialogue"]
+[ext_resource type="Texture2D" uid="uid://mmmjvxl2x47y" path="res://Sprites/Penny/Portrait.png" id="13_portrait"]
+[ext_resource type="Script" path="res://Scripts/ControlsTutorial.cs" id="14_controls_tutorial"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkerq"]
 size = Vector2(22.5, 200)
@@ -22,30 +26,55 @@ size = Vector2(20, 217)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s0fxj"]
 size = Vector2(363.5, 35.5)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2c7ix"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mosfh"]
 resource_local_to_scene = true
 atlas = ExtResource("7_items")
 region = Rect2(99.49285, 66.018326, 23.575531, 28.705978)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2n7bl"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2vqh"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2w6e4"]
 resource_local_to_scene = true
 atlas = ExtResource("7_items")
 region = Rect2(68.54894, 33.302006, 21.910484, 29.710312)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_legwd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_o28pm"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jk7mt"]
 resource_local_to_scene = true
 atlas = ExtResource("7_items")
 region = Rect2(68.50539, 63.878204, 22.600601, 30.786118)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3rd1k"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5x7m"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wex4"]
 resource_local_to_scene = true
 atlas = ExtResource("7_items")
 region = Rect2(36.260124, 65.02454, 22.162163, 29.755821)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mosfh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_t63xj"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4pnx"]
 resource_local_to_scene = true
 atlas = ExtResource("7_items")
 region = Rect2(100.79552, 33.4917, 21.146797, 29.203178)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqpt3"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(31.577438, 33.64226, 15.3381195, 15.199165)
 
 [node name="Penny\'s Room" type="Node2D" unique_id=179292971]
 
@@ -122,28 +151,40 @@ y_sort_enabled = true
 
 [node name="Collectible" parent="Actors" unique_id=935793702 instance=ExtResource("4_2c7ix")]
 position = Vector2(306, 72)
-ItemTexture = SubResource("AtlasTexture_2c7ix")
+ItemTexture = SubResource("AtlasTexture_mosfh")
+TutorialText = "Os itens verdes aumentam sua vida máxima em um coração."
+SlowdownTexture = SubResource("AtlasTexture_k2vqh")
 
 [node name="Collectible2" parent="Actors" unique_id=1267453198 instance=ExtResource("4_2c7ix")]
 position = Vector2(157, 206)
-ItemTexture = SubResource("AtlasTexture_2n7bl")
+ItemTexture = SubResource("AtlasTexture_2w6e4")
+TutorialText = "Os itens amarelos aumentam sua velocidade por 10 segundos."
+SlowdownTexture = SubResource("AtlasTexture_o28pm")
 
 [node name="Collectible3" parent="Actors" unique_id=466737233 instance=ExtResource("4_2c7ix")]
 position = Vector2(35, 62)
-ItemTexture = SubResource("AtlasTexture_legwd")
+ItemTexture = SubResource("AtlasTexture_jk7mt")
+TutorialText = "Os itens vermelhos aumentam o dano dos seus ataques por 10 segundos."
+SlowdownTexture = SubResource("AtlasTexture_y5x7m")
 
 [node name="Collectible4" parent="Actors" unique_id=838648905 instance=ExtResource("4_2c7ix")]
 position = Vector2(240, 131)
-ItemTexture = SubResource("AtlasTexture_3rd1k")
+ItemTexture = SubResource("AtlasTexture_7wex4")
+TutorialText = "O itens roxos reduzem sua velocidade por 10 segundos."
+SlowdownTexture = SubResource("AtlasTexture_t63xj")
 
 [node name="Collectible5" parent="Actors" unique_id=1842697759 instance=ExtResource("4_2c7ix")]
 position = Vector2(19, 138)
-ItemTexture = SubResource("AtlasTexture_mosfh")
+ItemTexture = SubResource("AtlasTexture_e4pnx")
+TutorialText = "O itens arco-íris concedem um coração temporário e deixa Penny colorida por 10 segundos."
+SlowdownTexture = SubResource("AtlasTexture_qqpt3")
 
 [node name="Player" parent="Actors" unique_id=310777521 instance=ExtResource("3_sf61d")]
 position = Vector2(160, 132)
+FollowPlayer = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=180166728]
+enabled = true
 position = Vector2(160, 128)
 zoom = Vector2(0.703125, 0.703125)
 limit_left = 0
@@ -151,4 +192,20 @@ limit_top = 0
 limit_right = 320
 limit_bottom = 256
 
-[node name="HealthHUD" parent="." instance=ExtResource("10_health_hud")]
+[node name="HealthHUD" parent="." unique_id=1771615986 instance=ExtResource("10_health_hud")]
+
+[node name="DialogueUI" parent="." unique_id=2056388725 instance=ExtResource("12_dialogue")]
+PlayerPortrait = ExtResource("13_portrait")
+PortraitPosition = Vector2(6, -10)
+PortraitScale = Vector2(0.01, 0.01)
+SpeakerFontSize = 6
+TextFontSize = 4
+CharactersPerSecond = 12.0
+
+[node name="PennyRoomTutorial" type="Node" parent="." unique_id=1061170677]
+script = ExtResource("11_tutorial")
+
+[node name="ControlsTutorial" type="Node" parent="."]
+script = ExtResource("14_controls_tutorial")
+Hints = Array[String](["WASD/Setas - Andar", "Tab - Objetivos", "E - Interagir", "Shift - Dash", "Espaço/Enter - Avançar diálogo"])
+TriggerActions = Array[String](["move", "objectives", "interact", "dash", "dialogue"])

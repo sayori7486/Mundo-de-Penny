@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="DialogueSequence" format=3 uid="uid://b2p452v8helgf"]
+
+[ext_resource type="Script" uid="uid://dw6krd8wr4oar" path="res://Scripts/DialogueSequence.cs" id="1_sequence"]
+[ext_resource type="Script" uid="uid://bap6dlhby013p" path="res://Scripts/DialogueLine.cs" id="2_line"]
+
+[sub_resource type="Resource" id="Line_1"]
+script = ExtResource("2_line")
+Speaker = "Mr. Pickles"
+Text = "Penny! Você voltou!"
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Line_2"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "O que aconteceu aqui?"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Line_3"]
+script = ExtResource("2_line")
+Speaker = "Mr. Pickles"
+Text = "Essas criaturas estranhas estão aparecendo por todo o reino, não estamos conseguindo detê-los sozinhos."
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Line_4"]
+script = ExtResource("2_line")
+Speaker = "Mr. Pickles"
+Text = "O cajado se quebrou! Precisamos da sua ajuda!"
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Line_5"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Como consertamos ele?"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Line_6"]
+script = ExtResource("2_line")
+Speaker = "Mr. Pickles"
+Text = "Reúna as estrelas espalhadas pelo reino. Com algumas delas conseguimos repara-lo."
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Line_7"]
+script = ExtResource("2_line")
+Speaker = "Mr. Pickles"
+Text = "Assim, conseguimos eliminar todas as imperfeições do nosso mundo!"
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Line_8"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Entendido! É o certo a se fazer!"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[resource]
+script = ExtResource("1_sequence")
+Lines = Array[ExtResource("2_line")]([SubResource("Line_1"), SubResource("Line_2"), SubResource("Line_3"), SubResource("Line_4"), SubResource("Line_5"), SubResource("Line_6"), SubResource("Line_7"), SubResource("Line_8")])
