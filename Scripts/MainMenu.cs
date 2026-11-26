@@ -3,20 +3,25 @@ using Godot;
 public partial class MainMenu : Control
 {
 	private const string PrologueScenePath = "res://Scenes/prologue.tscn";
+	private const string MenuMusicPath = "res://Music/Evans Full.wav";
 	private const string SettingsPath = "user://settings.cfg";
+	private const float MusicFadeDuration = 1.0f;
 	private const float SelectionPadding = 1.0f;
 	private const string MasterBusName = "Master";
 
 	private TextureButton _playButton = null!;
 	private TextureButton _optionsButton = null!;
 	private TextureButton _quitButton = null!;
+	private Button _creditsButton = null!;
 	private Panel _selectionOutline = null!;
 	private VBoxContainer _menuButtons = null!;
 	private PanelContainer _optionsPanel = null!;
+	private PanelContainer _creditsPanel = null!;
 	private HSlider _masterVolumeSlider = null!;
 	private Label _masterVolumeValue = null!;
 	private CheckButton _fullscreenToggle = null!;
 	private Button _backButton = null!;
+	private Button _creditsBackButton = null!;
 	private ColorRect _transitionFade = null!;
 	private readonly ConfigFile _settings = new();
 	private Window.ModeEnum _windowedMode = Window.ModeEnum.Maximized;
@@ -28,13 +33,16 @@ public partial class MainMenu : Control
 		_playButton = GetNode<TextureButton>("MenuButtons/PlayButton");
 		_optionsButton = GetNode<TextureButton>("MenuButtons/OptionsButton");
 		_quitButton = GetNode<TextureButton>("MenuButtons/QuitButton");
+		_creditsButton = GetNode<Button>("OptionsPanel/Contents/CreditsButton");
 		_selectionOutline = GetNode<Panel>("SelectionOutline");
 		_menuButtons = GetNode<VBoxContainer>("MenuButtons");
 		_optionsPanel = GetNode<PanelContainer>("OptionsPanel");
+		_creditsPanel = GetNode<PanelContainer>("CreditsPanel");
 		_masterVolumeSlider = GetNode<HSlider>("OptionsPanel/Contents/VolumeRow/MasterVolume");
 		_masterVolumeValue = GetNode<Label>("OptionsPanel/Contents/VolumeRow/VolumeValue");
 		_fullscreenToggle = GetNode<CheckButton>("OptionsPanel/Contents/FullscreenToggle");
 		_backButton = GetNode<Button>("OptionsPanel/Contents/BackButton");
+		_creditsBackButton = GetNode<Button>("CreditsPanel/Contents/BackButton");
 		_transitionFade = GetNode<ColorRect>("TransitionFade");
 
 		_masterBusIndex = AudioServer.GetBusIndex(MasterBusName);
@@ -50,17 +58,33 @@ public partial class MainMenu : Control
 		}
 
 		LoadSettings();
+		_ = GetNode<MusicManager>("/root/MusicManager")
+			.TransitionToTrack(MenuMusicPath, MusicFadeDuration);
 		ConnectSignals();
 		CallDeferred(nameof(FocusPlayButton));
 	}
 
 	public override void _UnhandledKeyInput(InputEvent @event)
 	{
-		if (_optionsPanel.Visible && @event.IsActionPressed("ui_cancel"))
+		if (!@event.IsActionPressed("ui_cancel"))
+		{
+			return;
+		}
+
+		if (_creditsPanel.Visible)
+		{
+			CloseCredits();
+		}
+		else if (_optionsPanel.Visible)
 		{
 			CloseOptions();
-			GetViewport().SetInputAsHandled();
 		}
+		else
+		{
+			return;
+		}
+
+		GetViewport().SetInputAsHandled();
 	}
 
 	private void LoadSettings()
@@ -90,7 +114,9 @@ public partial class MainMenu : Control
 		_playButton.Pressed += StartGame;
 		_optionsButton.Pressed += OpenOptions;
 		_quitButton.Pressed += QuitGame;
+		_creditsButton.Pressed += OpenCredits;
 		_backButton.Pressed += CloseOptions;
+		_creditsBackButton.Pressed += CloseCredits;
 		_masterVolumeSlider.ValueChanged += OnMasterVolumeChanged;
 		_fullscreenToggle.Toggled += OnFullscreenToggled;
 
@@ -162,9 +188,24 @@ public partial class MainMenu : Control
 		_masterVolumeSlider.GrabFocus();
 	}
 
+	private void OpenCredits()
+	{
+		_optionsPanel.Visible = false;
+		_creditsPanel.Visible = true;
+		_creditsBackButton.GrabFocus();
+	}
+
+	private void CloseCredits()
+	{
+		_creditsPanel.Visible = false;
+		_optionsPanel.Visible = true;
+		_creditsButton.GrabFocus();
+	}
+
 	private void CloseOptions()
 	{
 		SaveSettings();
+		_creditsPanel.Visible = false;
 		_optionsPanel.Visible = false;
 		_menuButtons.Visible = true;
 		_optionsButton.GrabFocus();

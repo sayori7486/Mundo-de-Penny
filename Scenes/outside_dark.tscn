@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://ohcm3o8tem2f" path="res://Sprites/Etc/fonte_dark.png" id="15_yxv3p"]
 [ext_resource type="PackedScene" uid="uid://cytdhaunukmrv" path="res://Scenes/dialogue_ui.tscn" id="16_dialogue_ui"]
 [ext_resource type="Resource" uid="uid://djdbclqgx6v8d" path="res://Scenes/outside_dark_emmi_dialogue.tres" id="17_emmi_dialogue"]
+[ext_resource type="Texture2D" uid="uid://mmmjvxl2x47y" path="res://Sprites/Penny/Portrait.png" id="19_m2ri6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_star_damage"]
 resource_local_to_scene = true
@@ -55,6 +56,7 @@ script = ExtResource("13_wave_controller")
 SlimeScene = ExtResource("14_slime")
 CollectibleScene = ExtResource("9_collectible")
 CollectibleTexturesByEffect = Array[AtlasTexture]([SubResource("AtlasTexture_star_damage"), SubResource("AtlasTexture_star_speed"), SubResource("AtlasTexture_star_health"), SubResource("AtlasTexture_star_slowdown"), SubResource("AtlasTexture_star_rainbow")])
+OutsideMusicPath = "res://Music/Letting Go Main.wav"
 TransitionToCastleOnCompletion = false
 WavesCompleteObjectiveText = "Todas as estrelas foram coletadas."
 WaveCollectibleLabel = "as estrelas"
@@ -63,6 +65,11 @@ EmmiScene = ExtResource("15_emmi")
 EnhancedSlimeCountPerWave = 1
 EnhancedSlimeScale = 1.35
 SpawnFinalWaveBoss = true
+FinalBossHealth = 20
+FinalBossScale = 2.3
+FinalBossMoveSpeed = 22.0
+FinalBossWanderSpeed = 10.0
+FinalBossAttackCooldownSeconds = 1.2
 
 [node name="SceneFadeIn" parent="." unique_id=910264121 instance=ExtResource("4_fade_in")]
 
@@ -387,6 +394,7 @@ polygon = PackedVector2Array(-113, -175, -106, -173, -101, -173, -97, -175, -97,
 [node name="DialogueUI" parent="." unique_id=1273298377 instance=ExtResource("16_dialogue_ui")]
 Dialogue = ExtResource("17_emmi_dialogue")
 AutoStartOnReady = false
+PlayerPortrait = ExtResource("19_m2ri6")
 SpeakerFontSize = 5
 TextFontSize = 4
 CharactersPerSecond = 12.0

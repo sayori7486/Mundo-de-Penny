@@ -4,8 +4,8 @@ using Godot;
 
 public partial class WaveController : Node2D
 {
-	private const string SplattersPath = "res://Music/Splatters.wav";
-	private const string FinalBossMusicPath = "res://Music/The Power in my Hands (Full).wav";
+	private const string DefaultOutsideMusicPath = "res://Music/Splatters.wav";
+	private const string FinalBossMusicPath = "res://Music/Lurking.wav";
 	private const string DeathPath = "res://Music/Death.wav";
 	private const string CastleScenePath = "res://Scenes/castle.tscn";
 	private const string OutsideDarkScenePath = "res://Scenes/outside_dark.tscn";
@@ -42,6 +42,9 @@ public partial class WaveController : Node2D
 
 	[Export]
 	public bool PlayOutsideMusic { get; set; } = true;
+
+	[Export]
+	public string OutsideMusicPath { get; set; } = DefaultOutsideMusicPath;
 
 	[Export]
 	public bool TransitionToCastleOnCompletion { get; set; } = true;
@@ -111,6 +114,8 @@ public partial class WaveController : Node2D
 	private Collectible.EffectType _lastCommonEffect;
 	private bool _rainbowSpawnedThisWave;
 	private bool _waveStartPending;
+	private bool _finalBossWaitingForWaveClear;
+	private bool _finalBossSpawnPending;
 	private bool _spawnFailureReported;
 	private bool _waveActive;
 	private bool _betweenWaves;
@@ -134,6 +139,7 @@ public partial class WaveController : Node2D
 		if (SpawnBounds.Size.X <= 0.0f
 			|| SpawnBounds.Size.Y <= 0.0f
 			|| WaveIntervalSeconds <= 0.0f
+			|| (PlayOutsideMusic && string.IsNullOrWhiteSpace(OutsideMusicPath))
 			|| string.IsNullOrWhiteSpace(WaveCollectibleLabel)
 			|| EnhancedSlimeCountPerWave < 0
 			|| EnhancedSlimeHealthBonus < 0
@@ -251,7 +257,7 @@ public partial class WaveController : Node2D
 		if (PlayOutsideMusic)
 		{
 			_ = GetNode<MusicManager>("/root/MusicManager")
-				.PlayTrackWithFadeIn(SplattersPath, MusicFadeDuration);
+				.PlayTrackWithFadeIn(OutsideMusicPath, MusicFadeDuration);
 		}
 
 		_waveStartPending = true;
@@ -346,6 +352,18 @@ public partial class WaveController : Node2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (_finalBossSpawnPending)
+		{
+			_spawnRetryRemaining -= (float)delta;
+			if (_spawnRetryRemaining > 0.0f)
+			{
+				return;
+			}
+
+			SpawnPendingFinalBoss();
+			return;
+		}
+
 		if (_waveStartPending)
 		{
 			_spawnRetryRemaining -= (float)delta;
@@ -403,11 +421,16 @@ public partial class WaveController : Node2D
 		}
 
 		int entityCount = SlimesPerWave[_waveNumber];
-		if (!TryGetSpawnPositions(entityCount * 2, out List<Vector2> positions))
+		int nextWaveNumber = _waveNumber + 1;
+		bool finalBossWave = SpawnFinalWaveBoss
+			&& nextWaveNumber == SlimesPerWave.Length;
+		int regularSlimeCount = entityCount - (finalBossWave ? 1 : 0);
+		int spawnPositionCount = regularSlimeCount + entityCount;
+		if (!TryGetSpawnPositions(spawnPositionCount, out List<Vector2> positions))
 		{
 			if (!_spawnFailureReported)
 			{
-				GD.PushError($"Could not find enough safe positions for wave {_waveNumber + 1}; retrying.");
+				GD.PushError($"Could not find enough safe positions for wave {nextWaveNumber}; retrying.");
 				_spawnFailureReported = true;
 			}
 
@@ -417,35 +440,27 @@ public partial class WaveController : Node2D
 		}
 
 		_spawnFailureReported = false;
-		_waveNumber++;
-		_remainingSlimes = entityCount;
+		_waveNumber = nextWaveNumber;
+		_remainingSlimes = regularSlimeCount;
 		_remainingItems = entityCount;
+		_finalBossWaitingForWaveClear = finalBossWave;
+		_finalBossSpawnPending = false;
 		_rainbowSpawnedThisWave = false;
 		_waveActive = true;
-		string objectiveText = _waveNumber == SlimesPerWave.Length && SpawnFinalWaveBoss
-			? $"Onda {_waveNumber}/3: derrote os slimes, colete {WaveCollectibleLabel} e vença o chefe."
+		string objectiveText = finalBossWave
+			? $"Onda {_waveNumber}/3: derrote os slimes e colete {WaveCollectibleLabel} para revelar o chefe."
 			: $"Onda {_waveNumber}/3: derrote os slimes e colete {WaveCollectibleLabel}.";
 		_inventoryHud?.SetObjectiveText(objectiveText, showOverlay: false);
 
 		for (int i = 0; i < entityCount; i++)
 		{
-			Collectible.EffectType effect = GetNextEffect();
-			bool spawnBoss = SpawnFinalWaveBoss
-				&& _waveNumber == SlimesPerWave.Length
-				&& i == entityCount - 1;
-			if (spawnBoss)
-			{
-				SpawnFinalBoss(positions[i]);
-			}
-			else
+			if (i < regularSlimeCount)
 			{
 				SpawnSlime(positions[i], i < EnhancedSlimeCountPerWave);
 			}
 
-			SpawnCollectible(
-				positions[entityCount + i],
-				effect
-			);
+			Collectible.EffectType effect = GetNextEffect();
+			SpawnCollectible(positions[regularSlimeCount + i], effect);
 		}
 	}
 
@@ -484,6 +499,27 @@ public partial class WaveController : Node2D
 			_ = GetNode<MusicManager>("/root/MusicManager")
 				.TransitionToTrack(FinalBossMusicPath, MusicFadeDuration);
 		}
+	}
+
+	private void SpawnPendingFinalBoss()
+	{
+		if (!TryGetSpawnPositions(1, out List<Vector2> positions))
+		{
+			if (!_spawnFailureReported)
+			{
+				GD.PushError("Could not find a safe position for the final boss; retrying.");
+				_spawnFailureReported = true;
+			}
+
+			_spawnRetryRemaining = SpawnRetryDelay;
+			return;
+		}
+
+		_spawnFailureReported = false;
+		_finalBossSpawnPending = false;
+		_remainingSlimes = 1;
+		_inventoryHud?.SetObjectiveText("O chefe final apareceu! Derrote-o.", showOverlay: false);
+		SpawnFinalBoss(positions[0]);
 	}
 
 	private void SpawnEmmiAt(Vector2 position)
@@ -638,6 +674,14 @@ public partial class WaveController : Node2D
 	{
 		if (!_waveActive || _remainingSlimes > 0 || _remainingItems > 0)
 		{
+			return;
+		}
+
+		if (_finalBossWaitingForWaveClear)
+		{
+			_finalBossWaitingForWaveClear = false;
+			_finalBossSpawnPending = true;
+			_spawnRetryRemaining = 0.0f;
 			return;
 		}
 

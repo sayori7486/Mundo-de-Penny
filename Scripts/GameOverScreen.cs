@@ -2,6 +2,9 @@ using Godot;
 
 public partial class GameOverScreen : CanvasLayer
 {
+	private const string GameOverMusicPath = "res://Music/In Legends.wav";
+	private const float MusicFadeDuration = 1.0f;
+
 	private VideoStreamPlayer _video = null!;
 	private Control _restartPrompt = null!;
 	private ColorRect _fadeOverlay = null!;
@@ -25,7 +28,8 @@ public partial class GameOverScreen : CanvasLayer
 			return;
 		}
 
-		GetNode<MusicManager>("/root/MusicManager").StopMusic();
+		_ = GetNode<MusicManager>("/root/MusicManager")
+			.TransitionToTrack(GameOverMusicPath, MusicFadeDuration);
 		_video.Finished += OnVideoFinished;
 		_video.Play();
 		FadeInVideo();

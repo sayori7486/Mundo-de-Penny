@@ -127,7 +127,8 @@ public partial class HealthHUD : CanvasLayer
 			_animatedHealth.Play(animation);
 		}
 
-		bool showNoColorSprite = currentStamina <= 0.0f;
+		bool showNoColorSprite = currentStamina <= 0.0f
+			|| (_showingNoColorSprite && currentStamina < FullStaminaThreshold);
 		if (_showingNoColorSprite == showNoColorSprite)
 		{
 			return;
