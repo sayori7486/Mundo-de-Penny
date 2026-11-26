@@ -467,10 +467,11 @@ animations = [{
 [node name="Slime" type="CharacterBody2D" unique_id=413196780]
 script = ExtResource("6_slime_enemy")
 MoveSpeed = 50.0
-AttackRange = 20.0
+AttackRange = 30.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1402955447]
 sprite_frames = SubResource("SpriteFrames_mkerq")
+speed_scale = 1.5
 animation = &"attack_down"
 frame = 8
 

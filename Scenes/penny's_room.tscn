@@ -152,7 +152,7 @@ y_sort_enabled = true
 [node name="Collectible" parent="Actors" unique_id=935793702 instance=ExtResource("4_2c7ix")]
 position = Vector2(306, 72)
 ItemTexture = SubResource("AtlasTexture_mosfh")
-TutorialText = "Os itens verdes aumentam sua vida máxima em um coração."
+TutorialText = "Os itens verdes aumentam sua vida máxima em um coração e recuperam toda a sua vida."
 SlowdownTexture = SubResource("AtlasTexture_k2vqh")
 
 [node name="Collectible2" parent="Actors" unique_id=1267453198 instance=ExtResource("4_2c7ix")]

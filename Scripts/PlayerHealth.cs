@@ -2,6 +2,8 @@ using Godot;
 
 public partial class PlayerHealth : Node
 {
+	private const string GameOverScenePath = "res://Scenes/game_over.tscn";
+
 	[Signal]
 	public delegate void HealthChangedEventHandler(int currentHealth, int maxHealth);
 
@@ -17,6 +19,7 @@ public partial class PlayerHealth : Node
 	private float _originalSpriteAlpha;
 	private Tween _hitFlashTween = null!;
 	private float _invulnerabilityRemaining;
+	private bool _gameOverStarted;
 
 	public override void _EnterTree()
 	{
@@ -61,7 +64,18 @@ public partial class PlayerHealth : Node
 		CurrentHealth = Mathf.Max(0, CurrentHealth - Mathf.Max(1, amount));
 		_invulnerabilityRemaining = Mathf.Max(0.0f, DamageInvulnerabilitySeconds);
 		EmitSignal(SignalName.HealthChanged, CurrentHealth, MaxHealth);
-		FlashAfterHit();
+
+		bool isFatalHit = CurrentHealth == 0;
+		if (isFatalHit)
+		{
+			ProcessMode = ProcessModeEnum.Always;
+		}
+
+		FlashAfterHit(isFatalHit);
+		if (isFatalHit)
+		{
+			GetTree().Paused = true;
+		}
 	}
 
 	public void IncreaseMaxHealth(int amount = 1)
@@ -73,7 +87,7 @@ public partial class PlayerHealth : Node
 		}
 
 		MaxHealth += amount;
-		CurrentHealth += amount;
+		CurrentHealth = MaxHealth;
 		EmitSignal(SignalName.HealthChanged, CurrentHealth, MaxHealth);
 	}
 
@@ -103,7 +117,7 @@ public partial class PlayerHealth : Node
 		EmitSignal(SignalName.HealthChanged, CurrentHealth, MaxHealth);
 	}
 
-	private void FlashAfterHit()
+	private void FlashAfterHit(bool showGameOverAfterFlash)
 	{
 		if (_hitFlashTween != null && _hitFlashTween.IsRunning())
 		{
@@ -116,20 +130,59 @@ public partial class PlayerHealth : Node
 
 		Tween tween = CreateTween();
 		_hitFlashTween = tween;
-		for (int pulse = 0; pulse < 3; pulse++)
+		int pulseCount = showGameOverAfterFlash ? 6 : 3;
+		double pulseDuration = showGameOverAfterFlash ? 0.12 : 0.07;
+		for (int pulse = 0; pulse < pulseCount; pulse++)
 		{
 			tween.TweenProperty(
 				_sprite,
 				"modulate:a",
 				_originalSpriteAlpha * 0.25f,
-				0.07
+				pulseDuration
 			);
 			tween.TweenProperty(
 				_sprite,
 				"modulate:a",
 				_originalSpriteAlpha,
-				0.07
+				pulseDuration
 			);
 		}
+
+		if (showGameOverAfterFlash)
+		{
+			tween.TweenCallback(Callable.From(ShowGameOver));
+		}
+	}
+
+	private void ShowGameOver()
+	{
+		if (_gameOverStarted)
+		{
+			return;
+		}
+
+		_gameOverStarted = true;
+		PackedScene gameOverScene = GD.Load<PackedScene>(GameOverScenePath);
+		if (gameOverScene == null)
+		{
+			GD.PushError($"PlayerHealth could not load game-over scene '{GameOverScenePath}'.");
+			ProcessMode = ProcessModeEnum.Inherit;
+			GetTree().Paused = false;
+			return;
+		}
+
+		Node currentScene = GetTree().CurrentScene;
+		if (currentScene == null)
+		{
+			GD.PushError("PlayerHealth could not open game over without a current scene.");
+			ProcessMode = ProcessModeEnum.Inherit;
+			GetTree().Paused = false;
+			return;
+		}
+
+		GameOverScreen gameOver = gameOverScene.Instantiate<GameOverScreen>();
+		currentScene.AddChild(gameOver);
+		ProcessMode = ProcessModeEnum.Inherit;
+		GetTree().Paused = true;
 	}
 }

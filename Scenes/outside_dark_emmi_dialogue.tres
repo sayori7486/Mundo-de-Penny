@@ -1,0 +1,311 @@
+[gd_resource type="Resource" script_class="DialogueSequence" format=3 uid="uid://djdbclqgx6v8d"]
+
+[ext_resource type="Script" uid="uid://dw6krd8wr4oar" path="res://Scripts/DialogueSequence.cs" id="1_sequence"]
+[ext_resource type="Script" uid="uid://bap6dlhby013p" path="res://Scripts/DialogueLine.cs" id="2_line"]
+[ext_resource type="Texture2D" uid="uid://dokdykdklko5i" path="res://Sprites/Cats/Emmi/gato_emmi.png" id="3_emmi_portrait"]
+[ext_resource type="Texture2D" uid="uid://p3jivxey8tyl" path="res://Sprites/Cats/Sayori/gato_sayori.png" id="3_evxgx"]
+[ext_resource type="Texture2D" uid="uid://dw0x33ci6s5uh" path="res://Sprites/Cats/Rubi/rubi_portrait.png" id="4_8kyjc"]
+
+[sub_resource type="Resource" id="EmmiLine_1"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = " Não faz sentido…"
+PortraitPosition = Vector2(-5, -30)
+PortraitScale = Vector2(0.015, 0.015)
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_ble5t"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Eu encontrei as estrelas, consertei o cajado! "
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_lnp3u"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Eu fiz tudo certo! "
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_evxgx"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Por que eles ainda estão aqui?"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_8kyjc"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Eu só queria que tudo voltasse a ser como antes…"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_6sfx2"]
+script = ExtResource("2_line")
+Speaker = "Biscuit"
+Text = "Como antes?"
+Portrait = ExtResource("3_emmi_portrait")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_bxx0x"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Sim! Quando tudo era organizado, quando nada estava fora do lugar!"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_fyq8u"]
+script = ExtResource("2_line")
+Speaker = "Sayori"
+Text = "Penny… "
+Portrait = ExtResource("3_evxgx")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_7q3c5"]
+script = ExtResource("2_line")
+Speaker = "Sayori"
+Text = "talvez o problema nunca tenha sido eles."
+Portrait = ExtResource("3_evxgx")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_cm6t2"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Como não?"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_qxcc3"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Eles destruíram nosso reino! "
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_7vgv7"]
+script = ExtResource("2_line")
+Speaker = "Mr. Pickles"
+Text = "Eles apenas fizeram você enxergar que aqui as coisas sempre estiveram se transformando…"
+Portrait = ExtResource("4_8kyjc")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_o8xn7"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Mas um mundo perfeito não deve ter problemas, mudanças inesperadas."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_u2gfe"]
+script = ExtResource("2_line")
+Speaker = "Biscuit"
+Text = "Quem disse?"
+Portrait = ExtResource("3_emmi_portrait")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_m1eiu"]
+script = ExtResource("2_line")
+Speaker = "Biscuit"
+Text = "Mudanças são importantes Penny..."
+Portrait = ExtResource("3_emmi_portrait")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_ja7lx"]
+script = ExtResource("2_line")
+Speaker = "Biscuit"
+Text = "uma flor que nunca cresce, continua sendo bonita? "
+Portrait = ExtResource("3_emmi_portrait")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_qreyn"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "..."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_1oryi"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = " Eu só queria manter tudo seguro."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_kq65b"]
+script = ExtResource("2_line")
+Speaker = "Sayori"
+Text = "Ou manter tudo sob controle?"
+Portrait = ExtResource("3_evxgx")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_t0nhc"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "..."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_n0tt1"]
+script = ExtResource("2_line")
+Speaker = "Sayori"
+Text = "Sua mãe te ensinou que existe um jeito perfeito de ser."
+Portrait = ExtResource("3_evxgx")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_6lvt3"]
+script = ExtResource("2_line")
+Speaker = "Sayori"
+Text = "E sem perceber, você criou um mundo onde também só existe um jeito aceitável de existir."
+Portrait = ExtResource("3_evxgx")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_qpnbj"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Eu só não queria que coisas ruins estragassem o meu reino."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_57jo3"]
+script = ExtResource("2_line")
+Speaker = "Mr. Pickles"
+Text = "Talvez você só tenha visto ele sendo diferente do que idealizou. "
+Portrait = ExtResource("4_8kyjc")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_v6sma"]
+script = ExtResource("2_line")
+Speaker = "Mr. Pickles"
+Text = "Mas as coisas não precisam ser cópias de uma ideia perfeita para terem valor."
+Portrait = ExtResource("4_8kyjc")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_vlph2"]
+script = ExtResource("2_line")
+Speaker = "Mr. Pickles"
+Text = "Elas possuem beleza justamente porque são únicas."
+Portrait = ExtResource("4_8kyjc")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_yolh5"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Então…"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_krnd0"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Eu só estava fazendo com meu mundo a mesma coisa que fizeram comigo."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_kdoat"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Tentando transformar tudo em algo que não era..."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_n7s03"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "tentando controlar tudo aos meus desejos. "
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_j0vu7"]
+script = ExtResource("2_line")
+Speaker = "Biscuit"
+Text = "Você não precisa ter controle de tudo."
+Portrait = ExtResource("3_emmi_portrait")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_o5x2s"]
+script = ExtResource("2_line")
+Speaker = "Biscuit"
+Text = "As vezes são as coisas imperfeitas, as mudanças inesperadas, que tornam um lugar completo."
+Portrait = ExtResource("3_emmi_portrait")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_jtcdt"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Eu achei que precisava consertar o meu mundo…"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_ni453"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Mas talvez eu precisasse aprender a enxergá-lo com mais carinho..."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[resource]
+script = ExtResource("1_sequence")
+Lines = Array[ExtResource("2_line")]([SubResource("EmmiLine_1"), SubResource("Resource_ble5t"), SubResource("Resource_lnp3u"), SubResource("Resource_evxgx"), SubResource("Resource_8kyjc"), SubResource("Resource_6sfx2"), SubResource("Resource_bxx0x"), SubResource("Resource_fyq8u"), SubResource("Resource_7q3c5"), SubResource("Resource_cm6t2"), SubResource("Resource_qxcc3"), SubResource("Resource_7vgv7"), SubResource("Resource_o8xn7"), SubResource("Resource_u2gfe"), SubResource("Resource_m1eiu"), SubResource("Resource_ja7lx"), SubResource("Resource_qreyn"), SubResource("Resource_1oryi"), SubResource("Resource_kq65b"), SubResource("Resource_t0nhc"), SubResource("Resource_n0tt1"), SubResource("Resource_6lvt3"), SubResource("Resource_qpnbj"), SubResource("Resource_57jo3"), SubResource("Resource_v6sma"), SubResource("Resource_vlph2"), SubResource("Resource_yolh5"), SubResource("Resource_krnd0"), SubResource("Resource_kdoat"), SubResource("Resource_n7s03"), SubResource("Resource_j0vu7"), SubResource("Resource_o5x2s"), SubResource("Resource_jtcdt"), SubResource("Resource_ni453")])

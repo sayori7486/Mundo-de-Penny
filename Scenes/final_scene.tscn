@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="VideoStream" path="res://Final_1080p.ogv" id="1_video"]
+[ext_resource type="PackedScene" path="res://Scenes/scene_fade_in.tscn" id="2_fade_in"]
+[ext_resource type="Script" path="res://Scripts/FinalSceneMusic.cs" id="3_music"]
+
+[node name="FinalScene" type="ColorRect"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.77778
+stretch_mode = 2
+
+[node name="Video" type="VideoStreamPlayer" parent="AspectRatioContainer"]
+layout_mode = 2
+stream = ExtResource("1_video")
+autoplay = true
+loop = false
+expand = true
+texture_filter = 1
+
+[node name="SceneFadeIn" parent="." instance=ExtResource("2_fade_in")]
+
+[node name="FinalSceneMusic" type="Node" parent="."]
+script = ExtResource("3_music")

@@ -4,6 +4,9 @@ using Godot;
 public partial class CatFollower : CharacterBody2D
 {
 	[Export]
+	public bool WaitForDialogueBeforeFollowing { get; set; } = true;
+
+	[Export]
 	public float FollowSpeed { get; set; } = 130.0f;
 
 	[Export]
@@ -23,6 +26,11 @@ public partial class CatFollower : CharacterBody2D
 	private int _catTrailIndex;
 	private string _facing = "down";
 	private bool _isFollowing;
+
+	public override void _EnterTree()
+	{
+		AddToGroup("cat_followers");
+	}
 
 	public override void _Ready()
 	{
@@ -53,6 +61,21 @@ public partial class CatFollower : CharacterBody2D
 			{
 				AddCollisionExceptionWith(obstacle);
 			}
+		}
+
+		foreach (Node node in GetTree().GetNodesInGroup("cat_followers"))
+		{
+			if (node is CatFollower otherCat && otherCat != this)
+			{
+				AddCollisionExceptionWith(otherCat);
+				otherCat.AddCollisionExceptionWith(this);
+			}
+		}
+
+		if (!WaitForDialogueBeforeFollowing)
+		{
+			StartFollowing();
+			return;
 		}
 
 		DialogueController dialogue =

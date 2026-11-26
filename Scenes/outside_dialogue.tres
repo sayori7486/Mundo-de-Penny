@@ -1,12 +1,18 @@
 [gd_resource type="Resource" script_class="DialogueSequence" format=3 uid="uid://b2p452v8helgf"]
 
 [ext_resource type="Script" uid="uid://dw6krd8wr4oar" path="res://Scripts/DialogueSequence.cs" id="1_sequence"]
+[ext_resource type="Texture2D" uid="uid://dw0x33ci6s5uh" path="res://Sprites/Cats/Rubi/rubi_portrait.png" id="2_j8yda"]
 [ext_resource type="Script" uid="uid://bap6dlhby013p" path="res://Scripts/DialogueLine.cs" id="2_line"]
 
 [sub_resource type="Resource" id="Line_1"]
 script = ExtResource("2_line")
 Speaker = "Mr. Pickles"
 Text = "Penny! Você voltou!"
+Portrait = ExtResource("2_j8yda")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
 metadata/_custom_type_script = "uid://bap6dlhby013p"
 
 [sub_resource type="Resource" id="Line_2"]
@@ -20,12 +26,22 @@ metadata/_custom_type_script = "uid://bap6dlhby013p"
 script = ExtResource("2_line")
 Speaker = "Mr. Pickles"
 Text = "Essas criaturas estranhas estão aparecendo por todo o reino, não estamos conseguindo detê-los sozinhos."
+Portrait = ExtResource("2_j8yda")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
 metadata/_custom_type_script = "uid://bap6dlhby013p"
 
 [sub_resource type="Resource" id="Line_4"]
 script = ExtResource("2_line")
 Speaker = "Mr. Pickles"
 Text = "O cajado se quebrou! Precisamos da sua ajuda!"
+Portrait = ExtResource("2_j8yda")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
 metadata/_custom_type_script = "uid://bap6dlhby013p"
 
 [sub_resource type="Resource" id="Line_5"]
@@ -39,12 +55,22 @@ metadata/_custom_type_script = "uid://bap6dlhby013p"
 script = ExtResource("2_line")
 Speaker = "Mr. Pickles"
 Text = "Reúna as estrelas espalhadas pelo reino. Com algumas delas conseguimos repara-lo."
+Portrait = ExtResource("2_j8yda")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
 metadata/_custom_type_script = "uid://bap6dlhby013p"
 
 [sub_resource type="Resource" id="Line_7"]
 script = ExtResource("2_line")
 Speaker = "Mr. Pickles"
 Text = "Assim, conseguimos eliminar todas as imperfeições do nosso mundo!"
+Portrait = ExtResource("2_j8yda")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
 metadata/_custom_type_script = "uid://bap6dlhby013p"
 
 [sub_resource type="Resource" id="Line_8"]

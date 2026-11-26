@@ -1,8 +1,392 @@
 [gd_scene format=3 uid="uid://bksumhj7fwt5x"]
 
 [ext_resource type="Texture2D" uid="uid://cl7jc8quo0hof" path="res://Sprites/Map/outside map2.png" id="1_4ie76"]
+[ext_resource type="Texture2D" uid="uid://c0fami5rm0wbb" path="res://Sprites/Etc/tree2.png" id="2_tree"]
+[ext_resource type="PackedScene" path="res://Scenes/tree_dark_leaves_overlay.tscn" id="3_tree_overlay"]
+[ext_resource type="PackedScene" path="res://Scenes/scene_fade_in.tscn" id="4_fade_in"]
+[ext_resource type="PackedScene" uid="uid://gre1yqsgs4fh" path="res://Scenes/player.tscn" id="5_player"]
+[ext_resource type="PackedScene" uid="uid://b6wh22c1mtwo" path="res://Scenes/health_hud.tscn" id="6_health_hud"]
+[ext_resource type="PackedScene" uid="uid://dxhie6lhfi6ts" path="res://Scenes/cat_rubi.tscn" id="7_cat_rubi"]
+[ext_resource type="PackedScene" uid="uid://d315th12135vw" path="res://Scenes/cat_sayori.tscn" id="8_cat_sayori"]
+[ext_resource type="PackedScene" uid="uid://cf7vu48dtsygf" path="res://Scenes/collectible.tscn" id="9_collectible"]
+[ext_resource type="Texture2D" uid="uid://dwx7880wafbls" path="res://Sprites/Etc/itens.png" id="10_items"]
+[ext_resource type="Script" uid="uid://cnujcxbq7wvnp" path="res://Scripts/CollectibleTracker.cs" id="11_tracker"]
+[ext_resource type="Script" uid="uid://bjs1n2wx0xi37" path="res://Scripts/InventoryHUD.cs" id="12_inventory_hud"]
+[ext_resource type="Script" uid="uid://cfm6cnyrg7fxw" path="res://Scripts/WaveController.cs" id="13_wave_controller"]
+[ext_resource type="PackedScene" uid="uid://spv4a2ltn080" path="res://Scenes/slime.tscn" id="14_slime"]
+[ext_resource type="PackedScene" path="res://Scenes/cat_emmi.tscn" id="15_emmi"]
+[ext_resource type="Texture2D" uid="uid://ohcm3o8tem2f" path="res://Sprites/Etc/fonte_dark.png" id="15_yxv3p"]
+[ext_resource type="PackedScene" uid="uid://cytdhaunukmrv" path="res://Scenes/dialogue_ui.tscn" id="16_dialogue_ui"]
+[ext_resource type="Resource" uid="uid://djdbclqgx6v8d" path="res://Scenes/outside_dark_emmi_dialogue.tres" id="17_emmi_dialogue"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_star_damage"]
+resource_local_to_scene = true
+atlas = ExtResource("10_items")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_star_speed"]
+resource_local_to_scene = true
+atlas = ExtResource("10_items")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_star_health"]
+resource_local_to_scene = true
+atlas = ExtResource("10_items")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_star_slowdown"]
+resource_local_to_scene = true
+atlas = ExtResource("10_items")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_star_rainbow"]
+resource_local_to_scene = true
+atlas = ExtResource("10_items")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mkerq"]
+size = Vector2(69.5, 897)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2a8f"]
+size = Vector2(1286, 41.5)
 
 [node name="outside dark" type="Node2D" unique_id=1970743569]
+script = ExtResource("13_wave_controller")
+SlimeScene = ExtResource("14_slime")
+CollectibleScene = ExtResource("9_collectible")
+CollectibleTexturesByEffect = Array[AtlasTexture]([SubResource("AtlasTexture_star_damage"), SubResource("AtlasTexture_star_speed"), SubResource("AtlasTexture_star_health"), SubResource("AtlasTexture_star_slowdown"), SubResource("AtlasTexture_star_rainbow")])
+TransitionToCastleOnCompletion = false
+WavesCompleteObjectiveText = "Todas as estrelas foram coletadas."
+WaveCollectibleLabel = "as estrelas"
+InteractWithEmmiAfterBoss = true
+EmmiScene = ExtResource("15_emmi")
+EnhancedSlimeCountPerWave = 1
+EnhancedSlimeScale = 1.35
+SpawnFinalWaveBoss = true
+
+[node name="SceneFadeIn" parent="." unique_id=910264121 instance=ExtResource("4_fade_in")]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1581632173]
 texture = ExtResource("1_4ie76")
+
+[node name="CollectibleTracker" type="Node" parent="." unique_id=1534454620]
+script = ExtResource("11_tracker")
+
+[node name="InventoryHUD" type="CanvasLayer" parent="." unique_id=2122456186]
+script = ExtResource("12_inventory_hud")
+ObjectiveText = "Derrote os slimes e colete as estrelas."
+
+[node name="Actors" type="Node2D" parent="." unique_id=1005072426]
+y_sort_enabled = true
+
+[node name="arvore" type="Sprite2D" parent="Actors" unique_id=1299011026]
+position = Vector2(-160, 103)
+texture = ExtResource("2_tree")
+
+[node name="LeavesOverlay" parent="Actors/arvore" unique_id=659155627 instance=ExtResource("3_tree_overlay")]
+
+[node name="arvore2" type="Sprite2D" parent="Actors" unique_id=404994190]
+position = Vector2(-106, 298)
+texture = ExtResource("2_tree")
+
+[node name="LeavesOverlay" parent="Actors/arvore2" unique_id=859415593 instance=ExtResource("3_tree_overlay")]
+
+[node name="arvore3" type="Sprite2D" parent="Actors" unique_id=1110881754]
+position = Vector2(-270, 248)
+texture = ExtResource("2_tree")
+flip_h = true
+
+[node name="LeavesOverlay" parent="Actors/arvore3" unique_id=819424873 instance=ExtResource("3_tree_overlay")]
+flip_h = true
+
+[node name="arvore4" type="Sprite2D" parent="Actors" unique_id=208557499]
+position = Vector2(-497, 227)
+texture = ExtResource("2_tree")
+flip_h = true
+
+[node name="LeavesOverlay" parent="Actors/arvore4" unique_id=763146800 instance=ExtResource("3_tree_overlay")]
+flip_h = true
+
+[node name="arvore5" type="Sprite2D" parent="Actors" unique_id=1974049826]
+position = Vector2(-367, 374)
+texture = ExtResource("2_tree")
+
+[node name="LeavesOverlay" parent="Actors/arvore5" unique_id=259244940 instance=ExtResource("3_tree_overlay")]
+
+[node name="arvore6" type="Sprite2D" parent="Actors" unique_id=562519561]
+position = Vector2(96, 382)
+texture = ExtResource("2_tree")
+flip_h = true
+
+[node name="LeavesOverlay" parent="Actors/arvore6" unique_id=1822688020 instance=ExtResource("3_tree_overlay")]
+flip_h = true
+
+[node name="arvore7" type="Sprite2D" parent="Actors" unique_id=530333573]
+position = Vector2(203, 139)
+texture = ExtResource("2_tree")
+
+[node name="LeavesOverlay" parent="Actors/arvore7" unique_id=953999071 instance=ExtResource("3_tree_overlay")]
+
+[node name="arvore8" type="Sprite2D" parent="Actors" unique_id=186982028]
+position = Vector2(469, 186)
+texture = ExtResource("2_tree")
+flip_h = true
+
+[node name="LeavesOverlay" parent="Actors/arvore8" unique_id=1968975778 instance=ExtResource("3_tree_overlay")]
+flip_h = true
+
+[node name="arvore9" type="Sprite2D" parent="Actors" unique_id=1241763859]
+position = Vector2(354, 281)
+texture = ExtResource("2_tree")
+flip_h = true
+
+[node name="LeavesOverlay" parent="Actors/arvore9" unique_id=2019457882 instance=ExtResource("3_tree_overlay")]
+flip_h = true
+
+[node name="arvore10" type="Sprite2D" parent="Actors" unique_id=1246663084]
+position = Vector2(442, 373)
+texture = ExtResource("2_tree")
+
+[node name="LeavesOverlay" parent="Actors/arvore10" unique_id=1369955752 instance=ExtResource("3_tree_overlay")]
+
+[node name="arvore11" type="Sprite2D" parent="Actors" unique_id=82441509]
+position = Vector2(-147, -138)
+texture = ExtResource("2_tree")
+
+[node name="LeavesOverlay" parent="Actors/arvore11" unique_id=2010841322 instance=ExtResource("3_tree_overlay")]
+
+[node name="arvore12" type="Sprite2D" parent="Actors" unique_id=640104780]
+position = Vector2(-357, -268)
+texture = ExtResource("2_tree")
+
+[node name="LeavesOverlay" parent="Actors/arvore12" unique_id=2063443923 instance=ExtResource("3_tree_overlay")]
+
+[node name="arvore13" type="Sprite2D" parent="Actors" unique_id=573591004]
+position = Vector2(-524, -329)
+texture = ExtResource("2_tree")
+flip_h = true
+
+[node name="LeavesOverlay" parent="Actors/arvore13" unique_id=48024933 instance=ExtResource("3_tree_overlay")]
+flip_h = true
+
+[node name="arvore14" type="Sprite2D" parent="Actors" unique_id=100486215]
+position = Vector2(-525, -90)
+texture = ExtResource("2_tree")
+
+[node name="LeavesOverlay" parent="Actors/arvore14" unique_id=766757831 instance=ExtResource("3_tree_overlay")]
+
+[node name="arvore17" type="Sprite2D" parent="Actors" unique_id=2006468940]
+position = Vector2(136, -87)
+texture = ExtResource("2_tree")
+flip_h = true
+
+[node name="LeavesOverlay" parent="Actors/arvore17" unique_id=1148688362 instance=ExtResource("3_tree_overlay")]
+flip_h = true
+
+[node name="arvore18" type="Sprite2D" parent="Actors" unique_id=1680264186]
+position = Vector2(237, -173)
+texture = ExtResource("2_tree")
+
+[node name="LeavesOverlay" parent="Actors/arvore18" unique_id=158415279 instance=ExtResource("3_tree_overlay")]
+
+[node name="arvore19" type="Sprite2D" parent="Actors" unique_id=560677849]
+position = Vector2(504, -258)
+texture = ExtResource("2_tree")
+
+[node name="LeavesOverlay" parent="Actors/arvore19" unique_id=1235264337 instance=ExtResource("3_tree_overlay")]
+
+[node name="arvore20" type="Sprite2D" parent="Actors" unique_id=580032528]
+position = Vector2(475, -93)
+texture = ExtResource("2_tree")
+
+[node name="LeavesOverlay" parent="Actors/arvore20" unique_id=2028471941 instance=ExtResource("3_tree_overlay")]
+
+[node name="Player" parent="Actors" unique_id=1272643805 instance=ExtResource("5_player")]
+position = Vector2(0, -270)
+AnimationSet = 1
+FollowPlayer = true
+CameraLimits = Rect2(-576, -448, 1152, 896)
+
+[node name="Cat_rubi" parent="Actors" unique_id=298740252 instance=ExtResource("7_cat_rubi")]
+position = Vector2(-14, -270)
+WaitForDialogueBeforeFollowing = false
+
+[node name="cat_sayori" parent="Actors" unique_id=760190840 instance=ExtResource("8_cat_sayori")]
+position = Vector2(14, -280)
+WaitForDialogueBeforeFollowing = false
+
+[node name="Collisions" type="Node2D" parent="." unique_id=1269789687]
+
+[node name="Wall" type="StaticBody2D" parent="Collisions" unique_id=1933379528]
+position = Vector2(-616, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/Wall" unique_id=1263069967]
+position = Vector2(9.25, -8.5)
+shape = SubResource("RectangleShape2D_mkerq")
+
+[node name="Wall2" type="StaticBody2D" parent="Collisions" unique_id=297240102]
+position = Vector2(598, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/Wall2" unique_id=1098355128]
+position = Vector2(9.25, -8.5)
+shape = SubResource("RectangleShape2D_mkerq")
+
+[node name="Wall3" type="StaticBody2D" parent="Collisions" unique_id=1535250803]
+position = Vector2(3, -469)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/Wall3" unique_id=1423379087]
+position = Vector2(-3, 2.25)
+shape = SubResource("RectangleShape2D_c2a8f")
+
+[node name="Wall4" type="StaticBody2D" parent="Collisions" unique_id=1002373628]
+position = Vector2(5, 463)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/Wall4" unique_id=705545284]
+position = Vector2(-3, 2.25)
+shape = SubResource("RectangleShape2D_c2a8f")
+
+[node name="Castelo" type="StaticBody2D" parent="Collisions" unique_id=1073804713]
+position = Vector2(5, 463)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Castelo" unique_id=876625868]
+polygon = PackedVector2Array(-101, -756, 91, -756, 91, -705, 97, -699, 107, -696, 123, -694, 155, -694, 175, -697, 181, -699, 187, -705, 187, -787, 196, -787, 196, -784, 198, -782, 208, -782, 210, -784, 210, -787, 283, -787, 283, -911, -293, -911, -293, -787, -220, -787, -220, -784, -218, -782, -208, -782, -206, -784, -206, -787, -197, -787, -197, -705, -192, -700, -185, -697, -173, -695, -165, -694, -133, -694, -117, -696, -107, -699, -101, -705)
+
+[node name="Floresta" type="StaticBody2D" parent="Collisions" unique_id=1091309710]
+position = Vector2(5, 463)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Floresta" unique_id=476209412]
+polygon = PackedVector2Array(-293, -909, -293, -787, -316, -795, -329, -794, -336, -797, -360, -809, -373, -808, -379, -811, -380, -813, -401, -846, -414, -845, -421, -848, -446, -815, -448, -813, -460, -811, -467, -813, -468, -816, -487, -851, -499, -850, -520, -822, -557, -791, -560, -787, -572, -786, -577, -787, -577, -910)
+
+[node name="Floresta2" type="StaticBody2D" parent="Collisions" unique_id=1607592136]
+position = Vector2(5, 463)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Floresta2" unique_id=682123526]
+polygon = PackedVector2Array(283, -818, 301, -817, 306, -815, 317, -815, 330, -791, 336, -788, 350, -789, 353, -792, 374, -825, 417, -825, 423, -822, 437, -823, 440, -826, 463, -804, 469, -801, 483, -802, 486, -805, 512, -832, 518, -829, 529, -829, 545, -799, 551, -796, 565, -797, 567, -799, 567, -909, 283, -910)
+
+[node name="Fonte" type="StaticBody2D" parent="Collisions" unique_id=1880611325 groups=["cat_ignored_collisions"]]
+position = Vector2(5, 463)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Fonte" unique_id=1562830433]
+polygon = PackedVector2Array(11, -405, 25, -408, 37, -413, 42, -418, 44, -422, 44, -437, 41, -443, 37, -447, 33, -449, 17, -454, 7, -456, -17, -456, -27, -454, -40, -450, -47, -447, -51, -443, -53, -439, -54, -437, -54, -422, -51, -417, -48, -414, -41, -410, -31, -407, -21, -405)
+
+[node name="arvore" type="StaticBody2D" parent="Collisions" unique_id=1870115752 groups=["cat_ignored_collisions"]]
+position = Vector2(5, 463)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore" unique_id=723357427]
+position = Vector2(-7, 18)
+polygon = PackedVector2Array(-94, -161, -94, -159, -101, -157, -106, -158, -110, -159, -110, -161, -107, -163, -107, -173, -107, -174, -98, -174, -98, -166)
+
+[node name="arvore2" type="StaticBody2D" parent="Collisions" unique_id=1166243046 groups=["cat_ignored_collisions"]]
+position = Vector2(-133, 421)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore2" unique_id=54271955]
+polygon = PackedVector2Array(-131, -149, -135, -147, -140, -147, -144, -148, -147, -149, -147, -151, -144, -155, -143, -163, -134, -163, -134, -152)
+
+[node name="arvore3" type="StaticBody2D" parent="Collisions" unique_id=99376745 groups=["cat_ignored_collisions"]]
+position = Vector2(-220, 562)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore3" unique_id=1815813451]
+polygon = PackedVector2Array(-137, -165, -137, -164, -141, -163, -144, -162, -149, -162, -153, -164, -153, -165, -150, -168, -150, -178, -150, -179, -141, -179, -141, -178, -141, -170, -140, -170)
+
+[node name="arvore4" type="StaticBody2D" parent="Collisions" unique_id=188468447 groups=["cat_ignored_collisions"]]
+position = Vector2(-373, 403)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore4" unique_id=1675143806]
+polygon = PackedVector2Array(-122, -150, -118, -152, -118, -154, -120, -156, -121, -156, -121, -167, -130, -167, -130, -159, -131, -159, -131, -156, -132, -156, -134, -154, -134, -152)
+
+[node name="arvore5" type="StaticBody2D" parent="Collisions" unique_id=1473474 groups=["cat_ignored_collisions"]]
+position = Vector2(-46, 293)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore5" unique_id=946105536]
+polygon = PackedVector2Array(-104, -166, -111, -164, -116, -164, -120, -166, -120, -167, -118, -170, -117, -170, -117, -180, -108, -180, -108, -173, -107, -172)
+
+[node name="arvore6" type="StaticBody2D" parent="Collisions" unique_id=299862713 groups=["cat_ignored_collisions"]]
+position = Vector2(-43, 57)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore6" unique_id=1773911818]
+polygon = PackedVector2Array(-94, -171, -101, -169, -106, -169, -110, -171, -110, -172, -107, -175, -107, -186, -98, -186, -98, -177, -97, -177)
+
+[node name="arvore7" type="StaticBody2D" parent="Collisions" unique_id=754865560 groups=["cat_ignored_collisions"]]
+position = Vector2(-249, -53)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore7" unique_id=1195082612]
+polygon = PackedVector2Array(-98, -191, -105, -189, -110, -189, -114, -191, -114, -193, -111, -195, -111, -206, -102, -206, -102, -198, -101, -198, -101, -195, -98, -193)
+
+[node name="arvore8" type="StaticBody2D" parent="Collisions" unique_id=380650992 groups=["cat_ignored_collisions"]]
+position = Vector2(-424, -92)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore8" unique_id=672320485]
+polygon = PackedVector2Array(-94, -214, -98, -211, -103, -211, -110, -213, -110, -215, -107, -220, -106, -220, -106, -228, -97, -228, -97, -217, -96, -217)
+
+[node name="arvore9" type="StaticBody2D" parent="Collisions" unique_id=1105011486 groups=["cat_ignored_collisions"]]
+position = Vector2(-415, 105)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore9" unique_id=1567366360]
+polygon = PackedVector2Array(-100, -172, -107, -170, -112, -170, -113, -172, -116, -172, -116, -173, -113, -175, -113, -186, -104, -186, -104, -177, -103, -177)
+
+[node name="arvore10" type="StaticBody2D" parent="Collisions" unique_id=2063170455 groups=["cat_ignored_collisions"]]
+position = Vector2(284, 316)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore10" unique_id=1439066266]
+polygon = PackedVector2Array(-71, -154, -78, -151, -83, -151, -87, -154, -87, -155, -84, -157, -84, -168, -75, -168, -75, -160, -74, -160, -74, -157)
+
+[node name="arvore11" type="StaticBody2D" parent="Collisions" unique_id=1998967434 groups=["cat_ignored_collisions"]]
+position = Vector2(191, 571)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore11" unique_id=1664226128]
+polygon = PackedVector2Array(-105, -166, -98, -164, -93, -164, -89, -165, -89, -167, -92, -169, -92, -180, -101, -180, -101, -172, -102, -172, -102, -169)
+
+[node name="arvore12" type="StaticBody2D" parent="Collisions" unique_id=1277221466 groups=["cat_ignored_collisions"]]
+position = Vector2(572, 565)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore12" unique_id=1535122496]
+polygon = PackedVector2Array(-120, -169, -127, -167, -132, -166, -136, -169, -136, -170, -133, -172, -133, -183, -124, -183, -124, -175, -123, -175, -123, -172)
+
+[node name="arvore13" type="StaticBody2D" parent="Collisions" unique_id=1887448700 groups=["cat_ignored_collisions"]]
+position = Vector2(488, 460)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore13" unique_id=1434216161]
+polygon = PackedVector2Array(-128, -156, -132, -153, -137, -153, -144, -155, -144, -157, -141, -159, -141, -162, -140, -162, -140, -170, -131, -170, -131, -159)
+
+[node name="arvore14" type="StaticBody2D" parent="Collisions" unique_id=1769800522 groups=["cat_ignored_collisions"]]
+position = Vector2(590, 346)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore14" unique_id=999864842]
+polygon = PackedVector2Array(-115, -136, -119, -134, -124, -134, -131, -136, -131, -137, -128, -140, -128, -142, -127, -142, -127, -150, -118, -150, -118, -140, -117, -140, -115, -137)
+
+[node name="arvore15" type="StaticBody2D" parent="Collisions" unique_id=1336165425 groups=["cat_ignored_collisions"]]
+position = Vector2(593, 100)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore15" unique_id=52884795]
+polygon = PackedVector2Array(-124, -169, -120, -167, -115, -167, -108, -169, -108, -171, -111, -172, -111, -176, -112, -176, -112, -187, -121, -187, -121, -172)
+
+[node name="arvore16" type="StaticBody2D" parent="Collisions" unique_id=190288396 groups=["cat_ignored_collisions"]]
+position = Vector2(605, -71)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore16" unique_id=1815418455]
+polygon = PackedVector2Array(-98, -161, -91, -163, -91, -165, -94, -166, -94, -170, -96, -170, -96, -178, -104, -177, -104, -167, -107, -165, -107, -163, -103, -161, -97, -161)
+
+[node name="FonteDark" type="Sprite2D" parent="Collisions/arvore16" unique_id=1663999751]
+position = Vector2(-604, 82)
+texture = ExtResource("15_yxv3p")
+
+[node name="arvore17" type="StaticBody2D" parent="Collisions" unique_id=123675408 groups=["cat_ignored_collisions"]]
+position = Vector2(350, 25)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore17" unique_id=1972624270]
+polygon = PackedVector2Array(-119, -175, -115, -173, -110, -173, -103, -174, -103, -176, -106, -178, -106, -181, -107, -181, -107, -189, -116, -189, -116, -178)
+
+[node name="arvore18" type="StaticBody2D" parent="Collisions" unique_id=1461795002 groups=["cat_ignored_collisions"]]
+position = Vector2(239, 112)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/arvore18" unique_id=30348686]
+polygon = PackedVector2Array(-113, -175, -106, -173, -101, -173, -97, -175, -97, -177, -100, -179, -100, -190, -109, -190, -109, -182, -110, -182, -110, -179, -111, -179, -113, -177)
+
+[node name="HealthHUD" parent="." unique_id=68798281 instance=ExtResource("6_health_hud")]
+
+[node name="DialogueUI" parent="." unique_id=1273298377 instance=ExtResource("16_dialogue_ui")]
+Dialogue = ExtResource("17_emmi_dialogue")
+AutoStartOnReady = false
+SpeakerFontSize = 5
+TextFontSize = 4
+CharactersPerSecond = 12.0

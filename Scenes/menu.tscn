@@ -1,0 +1,272 @@
+[gd_scene format=3 uid="uid://cv62glbjw6m1l"]
+
+[ext_resource type="VideoStream" uid="uid://dwwuuucp40jwh" path="res://Menu_1080p_v2.ogv" id="1_video"]
+[ext_resource type="Texture2D" uid="uid://salw5jvubpyg" path="res://Sprites/Etc/botoes.png" id="2_buttons"]
+[ext_resource type="Script" uid="uid://dsrxuv26f2pmu" path="res://Scripts/MainMenu.cs" id="3_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_selection_outline"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_play"]
+atlas = ExtResource("2_buttons")
+region = Rect2(154, 295, 1132, 221)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_options"]
+atlas = ExtResource("2_buttons")
+region = Rect2(154, 609, 1132, 222)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_quit"]
+atlas = ExtResource("2_buttons")
+region = Rect2(154, 924, 1132, 221)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_options_panel"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 0.94, 0.91, 0.97)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.24, 0.45, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_volume_track"]
+bg_color = Color(0.89, 0.63, 0.72, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_options_button"]
+content_margin_left = 6.0
+content_margin_top = 2.0
+content_margin_right = 6.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 0.68, 0.78, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72, 0.24, 0.45, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_options_button_pressed"]
+content_margin_left = 6.0
+content_margin_top = 2.0
+content_margin_right = 6.0
+content_margin_bottom = 2.0
+bg_color = Color(0.91, 0.48, 0.64, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.62, 0.16, 0.36, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_options_button_hover"]
+content_margin_left = 6.0
+content_margin_top = 2.0
+content_margin_right = 6.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 0.76, 0.83, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72, 0.24, 0.45, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_options_button_focus"]
+content_margin_left = 6.0
+content_margin_top = 2.0
+content_margin_right = 6.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 0.68, 0.78, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Menu" type="Control" unique_id=1518145082]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_script")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=1609454676]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.77778
+
+[node name="Background" type="VideoStreamPlayer" parent="AspectRatioContainer" unique_id=708861550]
+texture_filter = 1
+layout_mode = 2
+stream = ExtResource("1_video")
+autoplay = true
+expand = true
+loop = true
+
+[node name="SelectionOutline" type="Panel" parent="." unique_id=1145827404]
+visible = false
+z_index = 1
+layout_mode = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_selection_outline")
+
+[node name="MenuButtons" type="VBoxContainer" parent="." unique_id=1145827405]
+layout_mode = 1
+offset_left = 21.0
+offset_top = 86.0
+offset_right = 177.0
+offset_bottom = 186.0
+scale = Vector2(0.4, 0.4)
+theme_override_constants/separation = 5
+
+[node name="PlayButton" type="TextureButton" parent="MenuButtons" unique_id=1145827406]
+custom_minimum_size = Vector2(156, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../OptionsButton")
+texture_normal = SubResource("AtlasTexture_play")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="OptionsButton" type="TextureButton" parent="MenuButtons" unique_id=1145827407]
+custom_minimum_size = Vector2(156, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_top = NodePath("../PlayButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+texture_normal = SubResource("AtlasTexture_options")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="QuitButton" type="TextureButton" parent="MenuButtons" unique_id=1145827408]
+custom_minimum_size = Vector2(156, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_bottom = NodePath("../PlayButton")
+texture_normal = SubResource("AtlasTexture_quit")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="OptionsPanel" type="PanelContainer" parent="." unique_id=1145827409]
+visible = false
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -108.0
+offset_top = -64.0
+offset_right = 108.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_options_panel")
+
+[node name="Contents" type="VBoxContainer" parent="OptionsPanel" unique_id=1145827410]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="OptionsPanel/Contents" unique_id=1145827411]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.53, 0.17, 0.33, 1)
+theme_override_font_sizes/font_size = 11
+text = "Opções"
+horizontal_alignment = 1
+
+[node name="VolumeRow" type="HBoxContainer" parent="OptionsPanel/Contents" unique_id=1145827412]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="VolumeLabel" type="Label" parent="OptionsPanel/Contents/VolumeRow" unique_id=1145827413]
+custom_minimum_size = Vector2(43, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.53, 0.17, 0.33, 1)
+theme_override_font_sizes/font_size = 8
+text = "Volume"
+
+[node name="MasterVolume" type="HSlider" parent="OptionsPanel/Contents/VolumeRow" unique_id=1145827414]
+modulate = Color(0.72, 0.24, 0.45, 1)
+custom_minimum_size = Vector2(80, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/slider = SubResource("StyleBoxFlat_volume_track")
+value = 100.0
+
+[node name="VolumeValue" type="Label" parent="OptionsPanel/Contents/VolumeRow" unique_id=1145827415]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.53, 0.17, 0.33, 1)
+theme_override_font_sizes/font_size = 8
+text = "100%"
+horizontal_alignment = 2
+
+[node name="FullscreenToggle" type="CheckButton" parent="OptionsPanel/Contents" unique_id=1145827416]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.53, 0.17, 0.33, 1)
+theme_override_colors/font_hover_color = Color(0.72, 0.24, 0.45, 1)
+theme_override_font_sizes/font_size = 8
+text = "Tela cheia"
+
+[node name="BackButton" type="Button" parent="OptionsPanel/Contents" unique_id=1145827417]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.53, 0.17, 0.33, 1)
+theme_override_colors/font_pressed_color = Color(0.53, 0.17, 0.33, 1)
+theme_override_colors/font_hover_color = Color(0.53, 0.17, 0.33, 1)
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_options_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_options_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_options_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_options_button_focus")
+text = "Voltar"
+
+[node name="TransitionFade" type="ColorRect" parent="."]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 0)

@@ -1,0 +1,69 @@
+[gd_resource type="Resource" script_class="DialogueSequence" format=3 uid="uid://ciijxvs8tynph"]
+
+[ext_resource type="Script" uid="uid://dw6krd8wr4oar" path="res://Scripts/DialogueSequence.cs" id="1_sequence"]
+[ext_resource type="Script" uid="uid://bap6dlhby013p" path="res://Scripts/DialogueLine.cs" id="2_line"]
+[ext_resource type="Texture2D" uid="uid://p3jivxey8tyl" path="res://Sprites/Cats/Sayori/gato_sayori.png" id="3_sayori_portrait"]
+
+[sub_resource type="Resource" id="SayoriLine_1"]
+script = ExtResource("2_line")
+Speaker = "Sayori"
+Text = " Obrigada por me ajudar a proteger o castelo."
+Portrait = ExtResource("3_sayori_portrait")
+UseCustomPortraitPosition = true
+PortraitPosition = Vector2(-5, -30)
+UseCustomPortraitScale = true
+PortraitScale = Vector2(0.015, 0.015)
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="PennyLine_2"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Finalmente!"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_805up"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Minha mãe sempre diz que o mundo real não é  como queremos..."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_o76w3"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Mas aqui eu posso criar o que desejo."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_v7yw1"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Um lugar onde nada muda..."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_e4mjb"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Onde tudo continua perfeito,"
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_iq0x0"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "exatamente como deve ser."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[sub_resource type="Resource" id="Resource_wh7bh"]
+script = ExtResource("2_line")
+Speaker = "Penny"
+Text = "Talvez esse seja o mundo que eu sempre procurei."
+IsPlayer = true
+metadata/_custom_type_script = "uid://bap6dlhby013p"
+
+[resource]
+script = ExtResource("1_sequence")
+Lines = Array[ExtResource("2_line")]([SubResource("SayoriLine_1"), SubResource("PennyLine_2"), SubResource("Resource_805up"), SubResource("Resource_o76w3"), SubResource("Resource_v7yw1"), SubResource("Resource_e4mjb"), SubResource("Resource_iq0x0"), SubResource("Resource_wh7bh")])

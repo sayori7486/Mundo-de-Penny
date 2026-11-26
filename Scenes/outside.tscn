@@ -15,9 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://b6wh22c1mtwo" path="res://Scenes/health_hud.tscn" id="11_health_hud"]
 [ext_resource type="PackedScene" uid="uid://dxhie6lhfi6ts" path="res://Scenes/cat_rubi.tscn" id="12_y6wel"]
 [ext_resource type="PackedScene" uid="uid://spv4a2ltn080" path="res://Scenes/slime.tscn" id="13_l7a3p"]
-[ext_resource type="Script" uid="uid://cfm6cnyrg7fxw" path="res://Scripts/OutsideController.cs" id="14_outside_controller"]
+[ext_resource type="Script" uid="uid://cfm6cnyrg7fxw" path="res://Scripts/WaveController.cs" id="14_outside_controller"]
 [ext_resource type="PackedScene" path="res://Scenes/tree_leaves_overlay.tscn" id="15_tree_leaves"]
-[ext_resource type="Script" path="res://Scripts/ControlsTutorial.cs" id="16_controls_tutorial"]
+[ext_resource type="Script" uid="uid://dd5c68h7xeycs" path="res://Scripts/ControlsTutorial.cs" id="16_controls_tutorial"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sjyhx"]
 resource_local_to_scene = true
@@ -76,13 +76,12 @@ Dialogue = ExtResource("6_dialogue_data")
 PlayerPortrait = ExtResource("7_y6wel")
 PortraitPosition = Vector2(6, -10)
 PortraitScale = Vector2(0.01, 0.01)
-SpeakerFontSize = 6
+SpeakerFontSize = 5
 TextFontSize = 4
 CharactersPerSecond = 12.0
 
-[node name="ControlsTutorial" type="Node" parent="."]
+[node name="ControlsTutorial" type="Node" parent="." unique_id=146877548]
 script = ExtResource("16_controls_tutorial")
-PlayerPath = NodePath("../Actors/Player")
 Hints = Array[String](["J - Atacar"])
 TriggerActions = Array[String](["attack"])
 

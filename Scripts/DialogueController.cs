@@ -9,6 +9,9 @@ public partial class DialogueController : CanvasLayer
 	public DialogueSequence Dialogue { get; set; } = null!;
 
 	[Export]
+	public bool AutoStartOnReady { get; set; } = true;
+
+	[Export]
 	public Texture2D PlayerPortrait { get; set; } = null!;
 
 	[Export]
@@ -85,6 +88,10 @@ public partial class DialogueController : CanvasLayer
 			return;
 		}
 		_lines = Dialogue.Lines;
+		if (!AutoStartOnReady)
+		{
+			return;
+		}
 
 		SceneFadeIn fadeIn = GetParent().GetNodeOrNull<SceneFadeIn>("SceneFadeIn");
 		if (fadeIn != null)
@@ -94,6 +101,26 @@ public partial class DialogueController : CanvasLayer
 		}
 
 		StartDialogue();
+	}
+
+	public bool StartConfiguredDialogue()
+	{
+		if (_isOpen)
+		{
+			GD.PushError("Cannot start a configured dialogue while another one is open.");
+			return false;
+		}
+
+		if (Dialogue == null || Dialogue.Lines.Count == 0)
+		{
+			GD.PushError("Cannot start a configured dialogue without any dialogue lines.");
+			return false;
+		}
+
+		_lines = Dialogue.Lines;
+		_lineIndex = 0;
+		StartDialogue();
+		return true;
 	}
 
 	private async void StartDialogueAfterFade(SceneFadeIn fadeIn)
@@ -183,8 +210,16 @@ public partial class DialogueController : CanvasLayer
 		_speaker.Text = line.Speaker;
 		_text.Text = line.Text;
 		StartTyping();
-		_portrait.Texture = PlayerPortrait;
-		_portrait.Visible = line.IsPlayer;
+		Texture2D portrait = line.Portrait;
+		if (portrait == null && line.IsPlayer)
+		{
+			portrait = PlayerPortrait;
+		}
+
+		_portrait.Texture = portrait;
+		_portrait.Position = line.UseCustomPortraitPosition ? line.PortraitPosition : PortraitPosition;
+		_portrait.Scale = line.UseCustomPortraitScale ? line.PortraitScale : PortraitScale;
+		_portrait.Visible = portrait != null;
 		_panel.Visible = true;
 	}
 

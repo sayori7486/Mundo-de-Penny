@@ -124,7 +124,7 @@ public partial class Collectible : StaticBody2D
 
 		if (SlowdownTexture == null || SlowdownTexture.Atlas == null)
 		{
-			GD.PushError("Collectible cannot convert to slowdown without a purple flower texture.");
+			GD.PushError("Collectible cannot convert to slowdown without a slowdown item texture.");
 			return;
 		}
 

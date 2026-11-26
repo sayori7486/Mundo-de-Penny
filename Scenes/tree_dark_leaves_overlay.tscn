@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" uid="uid://c0fami5rm0wbb" path="res://Sprites/Etc/tree2.png" id="1_tree"]
+
+[node name="LeavesOverlay" type="Sprite2D"]
+position = Vector2(0, -5.5)
+z_index = 1
+texture = ExtResource("1_tree")
+region_enabled = true
+region_rect = Rect2(0, 0, 54, 40)

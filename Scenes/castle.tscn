@@ -5,60 +5,134 @@
 [ext_resource type="PackedScene" uid="uid://b6wh22c1mtwo" path="res://Scenes/health_hud.tscn" id="3_health_hud"]
 [ext_resource type="PackedScene" path="res://Scenes/scene_fade_in.tscn" id="4_fade_in"]
 [ext_resource type="PackedScene" uid="uid://dxhie6lhfi6ts" path="res://Scenes/cat_rubi.tscn" id="5_cat_rubi"]
+[ext_resource type="PackedScene" uid="uid://cf7vu48dtsygf" path="res://Scenes/collectible.tscn" id="6_collectible"]
+[ext_resource type="Texture2D" uid="uid://dwx7880wafbls" path="res://Sprites/Etc/itens.png" id="7_items"]
+[ext_resource type="PackedScene" uid="uid://spv4a2ltn080" path="res://Scenes/slime.tscn" id="8_slime"]
+[ext_resource type="Script" uid="uid://cfm6cnyrg7fxw" path="res://Scripts/WaveController.cs" id="9_wave_controller"]
+[ext_resource type="Script" uid="uid://cnujcxbq7wvnp" path="res://Scripts/CollectibleTracker.cs" id="10_collectible_tracker"]
+[ext_resource type="Script" uid="uid://bjs1n2wx0xi37" path="res://Scripts/InventoryHUD.cs" id="11_inventory_hud"]
+[ext_resource type="PackedScene" uid="uid://cytdhaunukmrv" path="res://Scenes/dialogue_ui.tscn" id="12_dialogue_ui"]
+[ext_resource type="Resource" path="res://Scenes/castle_sayori_dialogue.tres" id="13_sayori_dialogue"]
+[ext_resource type="Texture2D" uid="uid://mmmjvxl2x47y" path="res://Sprites/Penny/Portrait.png" id="14_player_portrait"]
+[ext_resource type="PackedScene" uid="uid://d315th12135vw" path="res://Scenes/cat_sayori.tscn" id="15_cat_sayori"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bow_damage"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bow_speed"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bow_health"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bow_slowdown"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bow_rainbow"]
+resource_local_to_scene = true
+atlas = ExtResource("7_items")
+region = Rect2(80, 0, 16, 16)
 
 [node name="castle" type="Node2D" unique_id=1447868046]
+script = ExtResource("9_wave_controller")
+SlimeScene = ExtResource("8_slime")
+CollectibleScene = ExtResource("6_collectible")
+CollectibleTexturesByEffect = Array[AtlasTexture]([SubResource("AtlasTexture_bow_damage"), SubResource("AtlasTexture_bow_speed"), SubResource("AtlasTexture_bow_health"), SubResource("AtlasTexture_bow_slowdown"), SubResource("AtlasTexture_bow_rainbow")])
+SpawnRegions = Array[Rect2]([Rect2(-484, -51, 968, 71), Rect2(-37, -340, 74, 745)])
+PlayOutsideMusic = false
+TransitionToCastleOnCompletion = false
+WavesCompleteObjectiveText = "Vá até Sayori e aperte E para conversar."
+InteractWithSayoriAfterWaves = true
+EnhancedSlimeCountPerWave = 1
 
 [node name="SceneFadeIn" parent="." unique_id=1371877199 instance=ExtResource("4_fade_in")]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=544024869]
 texture = ExtResource("1_ayoda")
 
-[node name="Player" parent="." unique_id=1749177291 instance=ExtResource("2_player")]
+[node name="CollectibleTracker" type="Node" parent="." unique_id=575671105]
+script = ExtResource("10_collectible_tracker")
+
+[node name="InventoryHUD" type="CanvasLayer" parent="." unique_id=1218935029]
+script = ExtResource("11_inventory_hud")
+ObjectiveText = "Derrote os slimes e colete os laços."
+
+[node name="DialogueUI" parent="." unique_id=263649132 instance=ExtResource("12_dialogue_ui")]
+Dialogue = ExtResource("13_sayori_dialogue")
+AutoStartOnReady = false
+PlayerPortrait = ExtResource("14_player_portrait")
+PortraitPosition = Vector2(6, -10)
+PortraitScale = Vector2(0.01, 0.01)
+SpeakerFontSize = 5
+TextFontSize = 4
+CharactersPerSecond = 12.0
+
+[node name="Actors" type="Node2D" parent="." unique_id=340746151]
+y_sort_enabled = true
+
+[node name="Player" parent="Actors" unique_id=1749177291 instance=ExtResource("2_player")]
 position = Vector2(2, 403)
 AnimationSet = 1
 FollowPlayer = true
 CameraLimits = Rect2(-576, -448, 1152, 896)
 
-[node name="Cat_rubi" parent="." unique_id=121428285 instance=ExtResource("5_cat_rubi")]
+[node name="Cat_rubi" parent="Actors" unique_id=121428285 instance=ExtResource("5_cat_rubi")]
 position = Vector2(-14, 404)
-FollowSpeed = 110.0
+WaitForDialogueBeforeFollowing = false
+
+[node name="cat_sayori" parent="Actors" unique_id=1924441376 instance=ExtResource("15_cat_sayori")]
+position = Vector2(0, -340)
 
 [node name="HealthHUD" parent="." unique_id=33797915 instance=ExtResource("3_health_hud")]
 
 [node name="Collisions" type="Node2D" parent="." unique_id=284393146]
 
-[node name="Wall" type="StaticBody2D" parent="Collisions" unique_id=363500094]
+[node name="Wall" type="StaticBody2D" parent="Collisions" unique_id=363500094 groups=["cat_ignored_collisions"]]
 position = Vector2(-1, -485)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall" unique_id=1992265458]
 polygon = PackedVector2Array(-529, 293, -110, 293, -110, 101, 111, 101, 111, 293, 530, 293, 530, 31, -535, 31)
 
-[node name="Wall2" type="StaticBody2D" parent="Collisions" unique_id=612379669]
+[node name="Wall2" type="StaticBody2D" parent="Collisions" unique_id=612379669 groups=["cat_ignored_collisions"]]
 position = Vector2(-2, 450)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall2" unique_id=174164226]
 polygon = PackedVector2Array(-77, -34, 81, -34, 3, -23)
 
-[node name="Wall3" type="StaticBody2D" parent="Collisions" unique_id=194556838]
+[node name="Wall3" type="StaticBody2D" parent="Collisions" unique_id=194556838 groups=["cat_ignored_collisions"]]
 position = Vector2(-652, 239)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall3" unique_id=1270817304]
 polygon = PackedVector2Array(573, 177, 573, -79, 125, -79, 125, -431, 2, -436, 17, 161)
 
-[node name="Wall4" type="StaticBody2D" parent="Collisions" unique_id=977092234]
+[node name="Wall4" type="StaticBody2D" parent="Collisions" unique_id=977092234 groups=["cat_ignored_collisions"]]
 position = Vector2(562, 248)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall4" unique_id=1892510033]
 polygon = PackedVector2Array(-483, 168, -483, -89, -36, -88, -36, -440, 21, -440, 46, 0)
 
-[node name="Wall5" type="StaticBody2D" parent="Collisions" unique_id=1910448230]
+[node name="Wall5" type="StaticBody2D" parent="Collisions" unique_id=1910448230 groups=["cat_ignored_collisions"]]
 position = Vector2(562, 248)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall5" unique_id=2144066921]
 polygon = PackedVector2Array(-676, -440, -673, -440, -673, -413, -671, -413, -671, -376, -677, -376, -677, -413, -676, -413)
 
-[node name="Wall6" type="StaticBody2D" parent="Collisions" unique_id=1037443015]
+[node name="Wall6" type="StaticBody2D" parent="Collisions" unique_id=1037443015 groups=["cat_ignored_collisions"]]
 position = Vector2(562, 248)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall6" unique_id=1376512536]
 polygon = PackedVector2Array(-452, -440, -449, -440, -449, -413, -447, -413, -447, -376, -453, -376, -453, -413, -452, -413)
+
+[node name="Wall7" type="StaticBody2D" parent="Collisions" unique_id=1536333421 groups=["cat_ignored_collisions"]]
+position = Vector2(562, 248)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions/Wall7" unique_id=582182452]
+polygon = PackedVector2Array(-574, -574, -551, -574, -550, -581, -550, -584, -551, -592, -554, -600, -559, -606, -562, -608, -563, -608, -566, -606, -571, -600, -573, -596, -574, -592, -575, -584, -575, -581, -574, -577)
